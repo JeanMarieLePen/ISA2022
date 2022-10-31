@@ -14,7 +14,6 @@ public class AuthenticationRequestDTO {
 		this.password = password;
 	}
 	public AuthenticationRequestDTO() {
-		super();
 	}
 //	geteri i seteri
 	public String getEmail() {
