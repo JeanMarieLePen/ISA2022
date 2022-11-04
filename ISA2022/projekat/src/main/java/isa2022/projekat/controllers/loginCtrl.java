@@ -1,6 +1,7 @@
 package isa2022.projekat.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,11 +12,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import isa2022.projekat.dtos.AuthenticationRequestDTO;
 import isa2022.projekat.dtos.AuthenticationResponseDTO;
+import isa2022.projekat.dtos.RegisterDTO;
 import isa2022.projekat.security.GenerateJwt;
+import isa2022.projekat.services.KorisnikService;
 import isa2022.projekat.services.MyUserDetailsService;
 
 @RestController
@@ -31,15 +35,29 @@ public class loginCtrl {
 	@Autowired
 	private GenerateJwt generateJwt;
 	
+	@Autowired 
+	private KorisnikService korisnikService;
+	
 	
 	@GetMapping("/hello")
 	public String testEndpoint() {
 		return "TEST ENDPOINT:SUCCESS";
 	}
 	
+	@GetMapping("/activateAccount")
+	public boolean activateAccount(@RequestParam(name="id") String id, @RequestParam(name="secret")String pw) {
+		return this.korisnikService.activateAccount(id, pw);
+	}
+	
+	@PostMapping("/registerUser")
+	public ResponseEntity<RegisterDTO> register(@RequestBody RegisterDTO user){
+		RegisterDTO temp = this.korisnikService.registerNewUser(user);
+		return (temp != null) ? new ResponseEntity<RegisterDTO>(temp, HttpStatus.OK) : new ResponseEntity<RegisterDTO>(HttpStatus.NOT_MODIFIED);
+	}
+	
 	@PostMapping("/authenticate")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequestDTO rqst) throws Exception{
-		String temp = "aaaa";
+		
 		try {
 			System.out.println("Email adresa korisnika: " + rqst.getEmail() + ", PASSWORD KORISNIKA: " + rqst.getPassword());
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(rqst.getEmail(), rqst.getPassword()));

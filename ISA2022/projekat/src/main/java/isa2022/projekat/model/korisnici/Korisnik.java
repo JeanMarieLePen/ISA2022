@@ -10,18 +10,25 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
+import com.sun.istack.NotNull;
+
 @Entity
 //Table ako zelimo da redefinisemo ime tabele
 //@Table(name="korisnik_tbl")
 //table_per_class strategija: sve podklase se mapiraju u posebne tabele
 //sve podklase cuvaju SVA polja te klase plus ona koja su nasledjena od nadklase
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Korisnik {
 
 	//ATRIBUTI
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", updatable = false, nullable = false)
+	//tip generisanja mora se postaviti na identity da bi se korisniku koji se 
+	//dodaje naknadno dodelio ID koji uzima u obzir prethodno uvezene podatke iz import.sql fajla
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//dodavanjem parametra columnDefinition i postavljanjem na serial/bigserial dobija se isto sto i u MySql-u koriscenjem AUTO_INCREMENT
+	//odnosno dobija se da se podacima uvezenim iz import.sql fajla generise ID 
+    @Column(columnDefinition = "bigserial", name = "id", updatable = false, unique=true)
 	private Long id;
 	
 	private String lozinka;
@@ -34,6 +41,7 @@ public class Korisnik {
 	private LocalDate datumRodjenja;
 	private LocalDate poslednjaDonacija;
 	
+	private StatusNaloga statusNaloga;
 	private TipKorisnika tipKorisnika;
 	
 	//KONSTRUKTORI
@@ -42,9 +50,9 @@ public class Korisnik {
 	public Korisnik() {
 		super();
 	}
-	
 	public Korisnik(Long id, String lozinka, String korIme, String email, String ime, String prezime, String adresa,
-			LocalDate datumRodjenja, LocalDate poslednjaDonacija, TipKorisnika tipKorisnika) {
+			LocalDate datumRodjenja, LocalDate poslednjaDonacija, StatusNaloga statusNaloga,
+			TipKorisnika tipKorisnika) {
 		super();
 		this.id = id;
 		this.lozinka = lozinka;
@@ -55,11 +63,18 @@ public class Korisnik {
 		this.adresa = adresa;
 		this.datumRodjenja = datumRodjenja;
 		this.poslednjaDonacija = poslednjaDonacija;
+		this.statusNaloga = statusNaloga;
 		this.tipKorisnika = tipKorisnika;
 	}
-
-	//GETERI I SETERI
 	
+	//GETERI I SETERI
+	public StatusNaloga getStatusNaloga() {
+		return statusNaloga;
+	}
+
+	public void setStatusNaloga(StatusNaloga statusNaloga) {
+		this.statusNaloga = statusNaloga;
+	}
 	public Long getId() {
 		return id;
 	}

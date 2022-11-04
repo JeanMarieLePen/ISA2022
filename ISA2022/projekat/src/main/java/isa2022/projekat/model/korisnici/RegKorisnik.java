@@ -19,7 +19,7 @@ import isa2022.projekat.model.data.ZahtevRezervacijaTermina;
 
 @Entity
 @Table(name="REGKORISNIK")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class RegKorisnik extends Korisnik{
 	
 	//ATRIBUTI
