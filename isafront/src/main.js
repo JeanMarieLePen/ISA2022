@@ -14,6 +14,25 @@ const router = new VueRouter({
   routes:Routes
 });
 
+Vue.mixin({
+  methods:{
+    checkLoginStatus(){
+      if(JSON.parse(localStorage.getItem('token'))==null){
+        this.$router.push(`/login`);
+      }
+    },
+    parseJwt(token){
+      var base64Url = token.split('.')[1];
+            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+
+            return JSON.parse(jsonPayload);
+    }
+  }
+});
+
 new Vue({
   el: '#app',
   render: h => h(AppMainFrame),

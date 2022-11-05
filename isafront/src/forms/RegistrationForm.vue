@@ -63,14 +63,7 @@
                         <input class="one-forth" placeholder="Unesite adresu(ulica, mesto, broj, drzava)..." v-model='form.adresa'>
                         </div>
 
-                        <div style="margin-top:20px" v-if='messages.errorDatumRodjenja' class="alert alert-danger" v-html="messages.errorDatumRodjenja">
-                        <br>
-                        <h4><label><font color="#1E90FF">Datum rodjenja:</font></label></h4>         
-                        <div>
-                            <dtpckr @select="setDatumRodjenja()"></dtpckr>
-                        </div>
-
-                        </div>
+                        
 
 
                         <div v-if='messages.errorPassword' class="alert alert-danger" v-html="messages.errorPassword"></div>
@@ -86,6 +79,16 @@
                         </div>
                         <hr>
 
+                        <div style="margin-top:20px" v-if='messages.errorDatumRodjenja' class="alert alert-danger" v-html="messages.errorDatumRodjenja">
+                        <br>
+                        </div>
+                        <h4><label><font color="#1E90FF">Datum rodjenja:</font></label></h4> 
+                        <div style="margin-bottom:30px;">
+                            <vueDatePicker style="width:100%;" @pick="updateDatePicker">
+
+                            </vueDatePicker>
+                        </div>
+
                         <div class="alert alert-warning" v-if='messages.errorPasswordMismatch' v-html="messages.errorPasswordMismatch"> </div>
                         <!-- <div style="margin-top:20px" v-if='messages.error' class="alert alert-danger" v-html="messages.error"></div> -->
                         <button type="button" class="btn btn-lg btn-primary btn-block text-uppercase" @click="submit()">
@@ -93,6 +96,7 @@
                         </button>
                         <a class="d-block text-center mt-2 small" href="/login">Uloguj se</a>
                         <hr class="my-4">
+                        <div v-if="messages.successMessage" v-html="messages.successMessage" class="alert alert-success"></div>
                     </form>
                     </div>  
                 </div>
@@ -107,10 +111,14 @@
 <script>
 import dataService from '../services/dataService'
 import DatePicker from 'vuejs-datepicker'
+import VueDatePicker from 'vue2-datepicker'
+import 'vue2-datepicker/index.css';
+import moment from 'moment'
 
 export default{
     components:{
-        'dtpckr':DatePicker
+        dtpckr:DatePicker,
+        vueDatePicker:VueDatePicker
     },
     data(){
         return{
@@ -153,12 +161,19 @@ export default{
                 errorRepNewPass:'',
                 errorNoPassword:'',
                 errorAddress:'',
+                errorDatumRodjenja:'',
                 errorPasswordMismatch:'',
             }
             
         }
     },
     methods:{
+        updateDatePicker(val1){
+            console.log("VAL1: "  + val1);
+            let tempDatum = moment(val1).format('YYYY-MM-DD');
+            console.log("TEMP DATUM: "  + tempDatum);
+            this.form.datumRodjenja = tempDatum;
+        },
         // setDatumRodjenja(){
         //     let tempDatum = 
         // },
@@ -208,7 +223,13 @@ export default{
                 setTimeout(() => {
                     this.messages.errorRepNewPass = '';
                 }, 4000);
-            }else{
+            }else if(this.form.datumRodjenja == ''){
+                this.messages.errorDatumRodjenja = '<h2>Niste odabrali datum rodjenja!</h2>';
+                setTimeout(() => {
+                    this.messages.errorDatumRodjenja = '';
+                }, 4000);
+            }
+            else{
                console.log("Kreiran objekat: " + JSON.stringify(this.form));
                if(this.form.lozinka != this.confirmPassword){
                     this.messages.errorPasswordMismatch = "<h2>Lozinke se ne podudaraju!</h2>";
@@ -219,9 +240,12 @@ export default{
                     dataService.register(this.form).then(response => {
                         if(response.status === 200){
                             console.log("Uspesno registrovan korisnik");
+                            this.messages.successMessage = '<h2>Zahtev uspesan. Proverite mejl za potvrdu naloga.</h2>';
+
                             setTimeout(() => {
                                 this.$router.push("/home");
-                            })
+                                this.messages.successMessage = '';
+                            }, 4000)
                         }
                     })
                }
