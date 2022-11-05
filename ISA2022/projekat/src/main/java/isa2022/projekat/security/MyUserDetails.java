@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import isa2022.projekat.model.korisnici.Korisnik;
+import isa2022.projekat.model.korisnici.StatusNaloga;
 
 public class MyUserDetails implements UserDetails {
 
@@ -70,7 +71,10 @@ public class MyUserDetails implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
-		return true;
+		if(this.korisnik.getStatusNaloga().equals(StatusNaloga.AKTIVAN)) {
+			return true;
+		}
+		return false;
 	}
 
 }

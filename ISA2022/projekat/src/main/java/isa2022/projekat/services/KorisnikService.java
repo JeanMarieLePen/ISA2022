@@ -1,5 +1,8 @@
 package isa2022.projekat.services;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -40,21 +43,29 @@ public class KorisnikService {
 		
 	}
 	
-	public boolean activateAccount(String id, String pw) {
+	public String activateAccount(String id, String pw, String exptime) {
 		Long tempId = Long.parseLong(id);
-		if(this.korisnikRepository.existsById(tempId)) {
+		LocalDateTime temp = LocalDateTime.now();
+		LocalDateTime exp = LocalDateTime.parse(exptime);
+		Duration duration = Duration.between(exp, temp);
+		long minutes = duration.toMinutes();
+		if(minutes > 30) {
+			return "<html><p>Aktivacioni link je istekao(period vazenja 30 minuta). Nije moguce aktiviranje naloga.</p></html>";
+		}
+		if(!this.korisnikRepository.existsById(tempId)) {
 			throw new DataIntegrityViolationException("Neispravan ID!");
 		}
 		Korisnik k = korisnikRepository.getById(tempId);
-		if(k.getStatusNaloga().equals(StatusNaloga.NA_CEKANJU)) {
-			k.setStatusNaloga(StatusNaloga.AKTIVAN);
-		}
-		try {
-			this.korisnikRepository.save(k);
-		}catch(Exception e) {
-			throw new DataIntegrityViolationException("Greska pri cuvanju!");
-		}
-		return true;
+			if(k.getStatusNaloga().equals(StatusNaloga.NA_CEKANJU)) {
+				k.setStatusNaloga(StatusNaloga.AKTIVAN);
+			}
+			try {
+				this.korisnikRepository.save(k);
+			}catch(Exception e) {
+				throw new DataIntegrityViolationException("Greska pri cuvanju!");
+			}
+		
+		return "<html><p>NALOG USPESNO AKTIVIRAN. ULOGUJTE SE.</p></html>";
 	}
 	
 	

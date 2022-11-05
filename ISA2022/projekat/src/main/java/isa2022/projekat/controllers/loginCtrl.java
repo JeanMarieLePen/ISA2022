@@ -45,8 +45,8 @@ public class loginCtrl {
 	}
 	
 	@GetMapping("/activateAccount")
-	public boolean activateAccount(@RequestParam(name="id") String id, @RequestParam(name="secret")String pw) {
-		return this.korisnikService.activateAccount(id, pw);
+	public String activateAccount(@RequestParam(name="id") String id, @RequestParam(name="secret")String pw, @RequestParam(name="exptime") String exptime) {
+		return this.korisnikService.activateAccount(id, pw, exptime);
 	}
 	
 	@PostMapping("/registerUser")

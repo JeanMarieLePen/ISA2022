@@ -37,6 +37,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter{
 		.authorizeRequests().antMatchers("/authenticate")
 		.permitAll()
 		.antMatchers("/registerUser").permitAll()
+		.antMatchers("/activateAccount").permitAll()
 		.anyRequest().authenticated();
 		//.anonymous().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		

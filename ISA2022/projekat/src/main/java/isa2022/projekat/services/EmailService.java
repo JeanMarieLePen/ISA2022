@@ -1,5 +1,7 @@
 package isa2022.projekat.services;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.SimpleMailMessage;
@@ -27,11 +29,12 @@ public class EmailService {
 		mail.setFrom(env.getProperty("spring.mail.username"));
 		mail.setSubject("Aktivacioni email");
 		String body = null;
+		String exptime = LocalDateTime.now().toString();
 		
 		body = "Postovani  " + k.getIme() + " " + k.getPrezime()
 		+ ",\nDa biste aktivirali svoj nalog, potrebno je da kliknete na sledeci link: "
 		+ host+"/activateAccount" + "?id=" + k.getId() + "&secret="
-		+ k.getLozinka();
+		+ k.getLozinka() + "&exptime=" + exptime;
 		
 		mail.setText(body); 
 		javaMailSender.send(mail);
