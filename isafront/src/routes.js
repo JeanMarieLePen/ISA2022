@@ -3,6 +3,7 @@ import LoginForm from './forms/LoginForm'
 import RegistrationForm from './forms/RegistrationForm'
 import Homepage from './main-components/Homepage'
 
+import SearchPage from './main-components/SearchPage'
 export default[
     {
         path:`/`,
@@ -23,6 +24,11 @@ export default[
         path:`/home`,
         name:'Homepage',
         component:Homepage
+    },
+    {
+        path:`/search`,
+        name:'SearchPage',
+        component:SearchPage
     }
 ]
    

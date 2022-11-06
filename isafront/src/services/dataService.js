@@ -28,6 +28,9 @@ class DataService{
         return axios.post(`${API_URL}/registerStuff`, User);
     }
 
+    getAllHospitals(){
+        return axios.get(`${API_URL}/medcentar/getAll`);
+    }
 
 }
 
