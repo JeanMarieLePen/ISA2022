@@ -3,25 +3,32 @@ package isa2022.projekat.model.korisnici;
 import java.time.LocalDate;
 import java.util.Collection;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
 import isa2022.projekat.model.data.MedCentar;
 
-
+@Entity
 public class MedRadnik extends Korisnik{
 
 	//ATRIBUTI
+	@ManyToOne(fetch=FetchType.LAZY)
 	private MedCentar medCentar;
-	private Collection<Korisnik> korisnik;
+	
+	
+//	@OneToMany
+//	private Collection<Korisnik> korisnik;
 	
 	//KONSTRUKTORI
 	public MedRadnik() {
 		super();
 	}
-	public MedRadnik(MedCentar medCentar, Collection<Korisnik> korisnik) {
+	public MedRadnik(MedCentar medCentar) {
 		super();
 		this.medCentar = medCentar;
-		this.korisnik = korisnik;
 	}
-	
 	//GETERI I SETERI
 	public MedCentar getMedCentar() {
 		return medCentar;
@@ -30,12 +37,4 @@ public class MedRadnik extends Korisnik{
 	public void setMedCentar(MedCentar medCentar) {
 		this.medCentar = medCentar;
 	}
-	public Collection<Korisnik> getKorisnik() {
-		return korisnik;
-	}
-	public void setKorisnik(Collection<Korisnik> korisnik) {
-		this.korisnik = korisnik;
-	}
-	
-	
 }

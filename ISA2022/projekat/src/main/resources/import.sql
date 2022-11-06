@@ -18,3 +18,15 @@ INSERT INTO public.korisnik(adresa, datum_rodjenja, email, ime, kor_ime, lozinka
 --INSERT INTO public.regkorisnik(adresa, datum_rodjenja, email, ime, kor_ime, lozinka, poslednja_donacija, prezime, tip_korisnika, penali, poeni, kategorija_id) VALUES ('Arsenija Carnojevica 1 Becej', '1996-04-14', 'arsen@gmail.com', 'mirjana', 'ludamira', '$2a$12$.RdHV2luFjgp5vR2LQSjWeLjU3WRzUEOmaqqsL51CD/L.5sPFoxoq', '2022-11-22', 'markovic', 1, 0, 0, null);
 --INSERT INTO public.regkorisnik(adresa, datum_rodjenja, email, ime, kor_ime, lozinka, poslednja_donacija, prezime, tip_korisnika, penali, poeni, kategorija_id) VALUES ('Nemanjina 11 Beograd', '2022-04-14', 'smajser@gmail.com', 'Slobodan', 'elpresidente', '$2a$12$.RdHV2luFjgp5vR2LQSjWeLjU3WRzUEOmaqqsL51CD/L.5sPFoxoq', '2022-11-22', 'milosevic', 2, 3, 3, null);
 --INSERT INTO public.regkorisnik(adresa, datum_rodjenja, email, ime, kor_ime, lozinka, poslednja_donacija, prezime, tip_korisnika, penali, poeni, kategorija_id) VALUES ('Svetozara Markovica 7 Nis', '2022-04-14', 'temp2@gmail.com', 'Milos', 'snp1389', '$2a$12$.RdHV2luFjgp5vR2LQSjWeLjU3WRzUEOmaqqsL51CD/L.5sPFoxoq', '2022-11-22', 'Markovic', 0, 3, 0, null);
+
+
+--INSERT INTO public.med_centar(id, a_grupa, ab_grupa, adresa, b_grupa, naziv, nulta_grupa, ocena, opis, radnovreme_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+INSERT INTO public.radno_vreme(kraj, kraj_pauze, pocetak, pocetak_pauze) VALUES ('2022-06-19T01:26:05', '08:00:00', '2022-06-19T01:26:05', '08:00:00');
+INSERT INTO public.radno_vreme(kraj, kraj_pauze, pocetak, pocetak_pauze) VALUES ('2022-06-19T01:26:05', '08:00:00', '2022-06-19T01:26:05', '08:00:00');
+INSERT INTO public.radno_vreme(kraj, kraj_pauze, pocetak, pocetak_pauze) VALUES ('2022-06-19T01:26:05', '08:00:00', '2022-06-19T01:26:05', '08:00:00');
+
+
+INSERT INTO public.med_centar(a_grupa, ab_grupa, adresa, b_grupa, naziv, nulta_grupa, ocena, opis, radnovreme_id) VALUES (5, 10, 'Mileticeva 55, Novi Sad, Srbija', 44, 'Medicinski centar Liman', 4, 2, 'Prijatno osoblje i ambijent...', 1);
+INSERT INTO public.med_centar(a_grupa, ab_grupa, adresa, b_grupa, naziv, nulta_grupa, ocena, opis, radnovreme_id) VALUES (5, 10, 'Mileticeva 55, Novi Sad, Srbija', 44, 'Medicinski centar Liman', 4, 2, 'Prijatno osoblje i ambijent...', 1);
+INSERT INTO public.med_centar(a_grupa, ab_grupa, adresa, b_grupa, naziv, nulta_grupa, ocena, opis, radnovreme_id) VALUES (5, 10, 'Mileticeva 55, Novi Sad, Srbija', 44, 'Medicinski centar Liman', 4, 2, 'Prijatno osoblje i ambijent...', 1);
+

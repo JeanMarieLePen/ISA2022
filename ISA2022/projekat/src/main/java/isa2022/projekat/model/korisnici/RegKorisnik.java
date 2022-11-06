@@ -9,11 +9,13 @@ import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import isa2022.projekat.model.data.Kategorija;
+import isa2022.projekat.model.data.Termin;
 import isa2022.projekat.model.data.ZahtevRezervacijaTermina;
 ;
 
@@ -31,6 +33,11 @@ public class RegKorisnik extends Korisnik{
 	@OneToMany(mappedBy="korisnik", cascade=CascadeType.ALL, orphanRemoval = true)
 	private Collection<ZahtevRezervacijaTermina> zahtevRezervacijaTermina;
 	
+	
+	//JEDAN KORISNIK, JEDAN TERMIN
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Termin termin;
+	
 	//KONSTRUKTORI
 	
 	
@@ -38,17 +45,16 @@ public class RegKorisnik extends Korisnik{
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	
-
 	public RegKorisnik(int poeni, Kategorija kategorija, int penali,
-			Collection<ZahtevRezervacijaTermina> zahtevRezervacijaTermina) {
+			Collection<ZahtevRezervacijaTermina> zahtevRezervacijaTermina, Termin termin) {
 		super();
 		this.poeni = poeni;
 		this.kategorija = kategorija;
 		this.penali = penali;
 		this.zahtevRezervacijaTermina = zahtevRezervacijaTermina;
+		this.termin = termin;
 	}
+
 
 	//GETERI I SETERI
 	public int getPoeni() {
@@ -75,6 +81,12 @@ public class RegKorisnik extends Korisnik{
 	}
 	public void setZahtevRezervacijaTermina(Collection<ZahtevRezervacijaTermina> zahtevRezervacijaTermina) {
 		this.zahtevRezervacijaTermina = zahtevRezervacijaTermina;
+	}
+	public Termin getTermin() {
+		return termin;
+	}
+	public void setTermin(Termin termin) {
+		this.termin = termin;
 	}
 	
 	

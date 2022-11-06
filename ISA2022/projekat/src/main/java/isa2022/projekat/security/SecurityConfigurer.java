@@ -38,6 +38,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter{
 		.permitAll()
 		.antMatchers("/registerUser").permitAll()
 		.antMatchers("/activateAccount").permitAll()
+		.antMatchers("/medcentar/**").permitAll()
 		.anyRequest().authenticated();
 		//.anonymous().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		
