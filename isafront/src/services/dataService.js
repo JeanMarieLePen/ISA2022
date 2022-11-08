@@ -31,7 +31,9 @@ class DataService{
     getAllHospitals(){
         return axios.get(`${API_URL}/medcentar/getAll`);
     }
-
+    submitUpitnik(upitnik, id){
+        return axios.post(`${API_URL}/regkorisnik/submitUpitnik/${id}`, upitnik)
+    }
 }
 
 export default new DataService();

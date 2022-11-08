@@ -36,6 +36,32 @@
                         </router-link>
                     </div>
                 </div>
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-0 shadow" style="height:100%">
+                        <router-link style="text-decoration: none; c" to="/upitnik" class="nav-link" exact>
+                            <img src="../assets/form.png" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h5 class="card-title mb-0">Upitnik</h5>
+                                <div class="card-text text-black-50" style="height:100px;">
+                                    Popunjavanje detalja upitnika o korisniku...
+                                </div>
+                            </div>
+                        </router-link>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-0 shadow" style="height:100%">
+                        <router-link style="text-decoration: none; c" to="/hospitalsOverview" class="nav-link" exact>
+                            <img src="../assets/hospitals.png" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h5 class="card-title mb-0">Pregled centara</h5>
+                                <div class="card-text text-black-50" style="height:100px;">
+                                    Pregledajte podatke o svim centrima za donaciju krvi...
+                                </div>
+                            </div>
+                        </router-link>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -67,6 +93,32 @@
                         </router-link>
                     </div>
                 </div>
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-0 shadow" style="height:100%">
+                        <router-link style="text-decoration: none; c" to="/upitnik" class="nav-link" exact>
+                            <img src="../assets/form.png" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h5 class="card-title mb-0">Upitnik</h5>
+                                <div class="card-text text-black-50" style="height:100px;">
+                                    Popunjavanje detalja upitnika o korisniku...
+                                </div>
+                            </div>
+                        </router-link>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-0 shadow" style="height:100%">
+                        <router-link style="text-decoration: none; c" to="/hospitalsOverview" class="nav-link" exact>
+                            <img src="../assets/hospitals.png" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h5 class="card-title mb-0">Pregled centara</h5>
+                                <div class="card-text text-black-50" style="height:100px;">
+                                    Pregledajte podatke o svim centrima za donaciju krvi...
+                                </div>
+                            </div>
+                        </router-link>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -93,6 +145,32 @@
                                 <h5 class="card-title mb-0">Pregled profila</h5>
                                 <div class="card-text text-black-50" style="height:100px;">
                                     Pregledajte podatke o vasem profilu...
+                                </div>
+                            </div>
+                        </router-link>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-0 shadow" style="height:100%">
+                        <router-link style="text-decoration: none; c" to="/upitnik" class="nav-link" exact>
+                            <img src="../assets/form.png" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h5 class="card-title mb-0">Upitnik</h5>
+                                <div class="card-text text-black-50" style="height:100px;">
+                                    Popunjavanje detalja upitnika o korisniku...
+                                </div>
+                            </div>
+                        </router-link>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-0 shadow" style="height:100%">
+                        <router-link style="text-decoration: none; c" to="/hospitalsOverview" class="nav-link" exact>
+                            <img src="../assets/hospitals.png" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h5 class="card-title mb-0">Pregled centara</h5>
+                                <div class="card-text text-black-50" style="height:100px;">
+                                    Pregledajte podatke o svim centrima za donaciju krvi...
                                 </div>
                             </div>
                         </router-link>
