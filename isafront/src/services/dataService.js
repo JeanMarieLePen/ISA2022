@@ -34,6 +34,9 @@ class DataService{
     submitUpitnik(upitnik, id){
         return axios.post(`${API_URL}/regkorisnik/submitUpitnik/${id}`, upitnik)
     }
+    checkUpitnik(id){
+        return axios.get(`${API_URL}/regkorisnik/checkUpitnik/${id}`);
+    }
 }
 
 export default new DataService();

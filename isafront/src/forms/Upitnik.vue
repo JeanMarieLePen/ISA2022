@@ -1,6 +1,9 @@
 <template>
     <div style="width:100%;">
-        <table id="tbl" style="width:30%;text-align:center;">
+        <div v-if="exists">
+            <h2>Vec ste popunili upitnik!</h2>
+        </div>
+        <table v-show="!exists" id="tbl" style="width:30%;text-align:center;">
             <thead>
                 <th>
                     <h2>UPITNIK O KORISNIKU</h2>
@@ -149,7 +152,10 @@ export default{
                     setTimeout(() => {
                         this.messages.successMessage = '';
                     }, 4000);
-                    this.$router.push(`/home`);
+                    setTimeout(() => {
+                        this.$router.push(`/home`);
+                    }, 4050);
+                    
                 }else{
                     this.messages.errorMessage = '<h2>Doslo je do greske.</h2>';
                     setTimeout(() => {
@@ -233,7 +239,8 @@ export default{
                 // jmbg:'',
                 // datumRodjenja:'',
                 // pol:'', adresa:'', opstina:'', mesto:'', kucniTelefon:'', poslovniTelefon:'', mobTelefon:'', firma_Ili_Skola:'', zanimanje:'', brojPrethodnihDonacija:0
-            }
+            },
+            exists: false,
         }
     },
     created(){
@@ -251,6 +258,15 @@ export default{
 
             console.log("IZVUCENI ID JE: " + tempId)
             this.userId = tempId;
+
+            try{
+                dataService.checkUpitnik(this.userId).then(response => {
+                    console.log("PUTNIK POSTOJI: " + response.data);
+                    this.exists = response.data;
+                });
+            }catch(error){
+
+            }
         }catch(error){
             console.log('greska: ' + error.message);
             localStorage.setItem('token', null);
