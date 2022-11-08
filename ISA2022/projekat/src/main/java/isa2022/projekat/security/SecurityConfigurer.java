@@ -39,6 +39,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter{
 		.antMatchers("/registerUser").permitAll()
 		.antMatchers("/activateAccount").permitAll()
 		.antMatchers("/medcentar/**").permitAll()
+//		.antMatchers("/regkorisnik/submitUpitnik/**").permitAll()
+		.antMatchers("/regkorisnik/**").permitAll()
 		.anyRequest().authenticated();
 		//.anonymous().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		

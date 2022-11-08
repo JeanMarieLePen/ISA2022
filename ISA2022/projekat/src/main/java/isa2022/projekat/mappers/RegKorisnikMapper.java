@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import isa2022.projekat.dtos.RegKorisnikDTO;
+import isa2022.projekat.dtos.TerminDTO;
 import isa2022.projekat.dtos.ZahtevRezervacijaTerminaDTO;
+import isa2022.projekat.model.data.Termin;
 import isa2022.projekat.model.data.ZahtevRezervacijaTermina;
 import isa2022.projekat.model.korisnici.RegKorisnik;
 
@@ -35,7 +37,13 @@ public class RegKorisnikMapper {
 		rk.setPoslednjaDonacija(rdto.getPoslednjaDonacija());
 		rk.setPrezime(rdto.getPrezime());
 		rk.setStatusNaloga(rdto.getStatusNaloga());
-		rk.setTermin(terminMapper.fromDTO(rdto.getTermin()));
+		
+		Collection<Termin> terminiList = new ArrayList<Termin>();
+		for(TerminDTO t : rdto.getTermini()) {
+			terminiList.add(terminMapper.fromDTO(t));
+		}
+		
+		rk.setTermini(terminiList);
 		rk.setTipKorisnika(rdto.getTipKorisnika());
 		
 		Collection<ZahtevRezervacijaTermina> tempLista = new ArrayList<ZahtevRezervacijaTermina>();
@@ -65,7 +73,12 @@ public class RegKorisnikMapper {
 		rdto.setPoslednjaDonacija(rk.getPoslednjaDonacija());
 		rdto.setPrezime(rk.getPrezime());
 		rdto.setStatusNaloga(rk.getStatusNaloga());
-		rdto.setTermin(terminMapper.toDTO(rk.getTermin()));
+		
+		Collection<TerminDTO> listaTermina = new ArrayList<TerminDTO>();
+		for(Termin t : rk.getTermini()) {
+			listaTermina.add(terminMapper.toDTO(t));
+		}
+		rdto.setTermini(listaTermina);
 		rdto.setTipKorisnika(rk.getTipKorisnika());
 		
 		Collection<ZahtevRezervacijaTerminaDTO> tempLista = new ArrayList<ZahtevRezervacijaTerminaDTO>();

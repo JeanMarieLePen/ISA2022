@@ -12,8 +12,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.springframework.lang.Nullable;
 
 import isa2022.projekat.model.korisnici.MedRadnik;
 import isa2022.projekat.model.korisnici.RegKorisnik;
@@ -34,7 +37,9 @@ public class Termin {
 	private LocalDateTime krajTermina;
 	private int brojMesta;
 	
-	@OneToMany(mappedBy="termin", cascade = CascadeType.ALL, orphanRemoval = true)
+//	@OneToMany(mappedBy="termin", cascade = CascadeType.ALL, orphanRemoval = true)
+	
+	@ManyToMany(mappedBy="termini")
 	private Collection<RegKorisnik> listaPrijavljenih;
 	
 	private int brSlobodnihMesta;

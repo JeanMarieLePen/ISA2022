@@ -4,18 +4,26 @@ import java.time.LocalDate;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.lang.Nullable;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import isa2022.projekat.model.data.Kategorija;
 import isa2022.projekat.model.data.Termin;
+import isa2022.projekat.model.data.Upitnik;
 import isa2022.projekat.model.data.ZahtevRezervacijaTermina;
 ;
 
@@ -34,9 +42,21 @@ public class RegKorisnik extends Korisnik{
 	private Collection<ZahtevRezervacijaTermina> zahtevRezervacijaTermina;
 	
 	
-	//JEDAN KORISNIK, JEDAN TERMIN
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Termin termin;
+//	//JEDAN KORISNIK, JEDAN TERMIN
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "termin_id")
+//	@Nullable
+//	@ManyToOne(optional = true, fetch = FetchType.LAZY)
+//	private Termin termin;
+	
+	@ManyToMany
+	@JoinTable(name="regkorisnik_termini", joinColumns = @JoinColumn(name="termin_id"),
+	inverseJoinColumns = @JoinColumn(name="regkorisnik_id"))
+	private Collection<Termin> termini;
+	
+	@OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name="upitnik_id", referencedColumnName = "id")
+	private Upitnik upitnik;
 	
 	//KONSTRUKTORI
 	
@@ -46,14 +66,28 @@ public class RegKorisnik extends Korisnik{
 		// TODO Auto-generated constructor stub
 	}
 	public RegKorisnik(int poeni, Kategorija kategorija, int penali,
-			Collection<ZahtevRezervacijaTermina> zahtevRezervacijaTermina, Termin termin) {
+			Collection<ZahtevRezervacijaTermina> zahtevRezervacijaTermina, Collection<Termin> termini,
+			Upitnik upitnik) {
 		super();
 		this.poeni = poeni;
 		this.kategorija = kategorija;
 		this.penali = penali;
 		this.zahtevRezervacijaTermina = zahtevRezervacijaTermina;
-		this.termin = termin;
+		this.termini = termini;
+		this.upitnik = upitnik;
 	}
+
+
+	public Collection<Termin> getTermini() {
+		return termini;
+	}
+
+
+
+	public void setTermini(Collection<Termin> termini) {
+		this.termini = termini;
+	}
+
 
 
 	//GETERI I SETERI
@@ -82,11 +116,11 @@ public class RegKorisnik extends Korisnik{
 	public void setZahtevRezervacijaTermina(Collection<ZahtevRezervacijaTermina> zahtevRezervacijaTermina) {
 		this.zahtevRezervacijaTermina = zahtevRezervacijaTermina;
 	}
-	public Termin getTermin() {
-		return termin;
+	public Upitnik getUpitnik() {
+		return upitnik;
 	}
-	public void setTermin(Termin termin) {
-		this.termin = termin;
+	public void setUpitnik(Upitnik upitnik) {
+		this.upitnik = upitnik;
 	}
 	
 	

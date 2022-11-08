@@ -7,18 +7,21 @@ public class RegKorisnikDTO extends KorisnikDTO{
 	private KategorijaDTO kategorija;
 	private int penali;
 	private Collection<ZahtevRezervacijaTerminaDTO> zahtevRezervacijaTermina;
-	private TerminDTO termin;
+	private Collection<TerminDTO> termini;
 	public RegKorisnikDTO() {
 		super();
 	}
 	
-	public TerminDTO getTermin() {
-		return termin;
+
+	public Collection<TerminDTO> getTermini() {
+		return termini;
 	}
 
-	public void setTermin(TerminDTO termin) {
-		this.termin = termin;
+
+	public void setTermini(Collection<TerminDTO> termini) {
+		this.termini = termini;
 	}
+
 
 	public int getPoeni() {
 		return poeni;
