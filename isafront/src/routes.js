@@ -3,7 +3,9 @@ import LoginForm from './forms/LoginForm'
 import RegistrationForm from './forms/RegistrationForm'
 import Homepage from './main-components/Homepage'
 
+import PregledCentara from './overviews/PregledCentara'
 import SearchPage from './main-components/SearchPage'
+import Upitnik from './forms/Upitnik'
 export default[
     {
         path:`/`,
@@ -29,6 +31,16 @@ export default[
         path:`/search`,
         name:'SearchPage',
         component:SearchPage
+    },
+    {
+        path:`/hospitalsOverview`,
+        name:"PregledCentara",
+        component:PregledCentara
+    },
+    {
+        path:`/upitnik`,
+        name:"Upitnik",
+        component:Upitnik
     }
 ]
    
