@@ -35,7 +35,11 @@ export default{
 
         }
     },
-    
+    methods:{
+        goToSearch(){
+            this.$router.push('/search')
+        }
+    }
 }
 
 </script>

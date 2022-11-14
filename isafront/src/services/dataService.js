@@ -37,6 +37,9 @@ class DataService{
     checkUpitnik(id){
         return axios.get(`${API_URL}/regkorisnik/checkUpitnik/${id}`);
     }
+    getCentarQuery(searchEntity){
+        return axios.post(`${API_URL}/medcentar/pretraga`, searchEntity);
+    }
 }
 
 export default new DataService();
