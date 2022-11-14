@@ -36,3 +36,10 @@ INSERT INTO public.med_centar(a_grupa, ab_grupa, adresa, b_grupa, naziv, nulta_g
 --REGKORISNICI
 INSERT INTO public.regkorisnik(penali, poeni, id, kategorija_id, upitnik_id) VALUES (2, 3, 1, 1, NULL);
 INSERT INTO public.regkorisnik(penali, poeni, id, kategorija_id, upitnik_id) VALUES (2, 3, 4, 1, NULL);
+
+--TERMINI
+INSERT INTO public.termin(br_slobodnih_mesta, broj_mesta, kraj_termina, pocetak_termina, med_centar_id)	VALUES (3, 10, '2022-11-19T10:00:00', '2022-11-19T09:00:00', 1);
+INSERT INTO public.termin(br_slobodnih_mesta, broj_mesta, kraj_termina, pocetak_termina, med_centar_id)	VALUES (5, 8, '2022-11-20T10:00:00', '2022-11-20T09:30:00', 1);
+INSERT INTO public.termin(br_slobodnih_mesta, broj_mesta, kraj_termina, pocetak_termina, med_centar_id)	VALUES (4, 5, '2022-11-20T17:30:00', '2022-11-20T16:30:00', 2);
+INSERT INTO public.termin(br_slobodnih_mesta, broj_mesta, kraj_termina, pocetak_termina, med_centar_id)	VALUES (0, 10, '2022-11-21T09:30:00', '2022-11-21T08:00:00', 3);
+INSERT INTO public.termin(br_slobodnih_mesta, broj_mesta, kraj_termina, pocetak_termina, med_centar_id)	VALUES (0, 10, '2022-11-21T09:30:00', '2022-11-21T08:00:00', 4);

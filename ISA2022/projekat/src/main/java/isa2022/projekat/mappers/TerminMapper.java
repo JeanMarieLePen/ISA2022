@@ -50,4 +50,20 @@ public class TerminMapper {
 		tdto.setListaPrijavljenih(tempLista);
 		return tdto;
 	}
+	public TerminDTO toDTOLite(Termin t) {
+		TerminDTO tdto = new TerminDTO();
+		tdto.setBrojMesta(t.getBrojMesta());
+		tdto.setBrSlobodnihMesta(t.getBrSlobodnihMesta());
+		tdto.setKrajTermina(t.getKrajTermina());
+		tdto.setPocetakTermina(tdto.getPocetakTermina());
+		//tdto.setMedCentar(medCentarMapper.toDTO(t.getMedCentar()));
+		
+//		Collection<RegKorisnikDTO> tempLista = new ArrayList<RegKorisnikDTO>();
+//		for(RegKorisnik rk : t.getListaPrijavljenih()) {
+//			tempLista.add(regKorisnikMapper.toDTO(rk));
+//		}
+//		
+//		tdto.setListaPrijavljenih(tempLista);
+		return tdto;
+	}
 }

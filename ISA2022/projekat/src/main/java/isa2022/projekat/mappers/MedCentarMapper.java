@@ -44,7 +44,7 @@ public class MedCentarMapper {
 		
 		Collection<TerminDTO> tempTermini = new ArrayList<TerminDTO>();
 		for(Termin t : mc.getTermini()) {
-			tempTermini.add(terminMapper.toDTO(t));
+			tempTermini.add(terminMapper.toDTOLite(t));
 		}
 		
 		temp.setTermini(tempTermini);
