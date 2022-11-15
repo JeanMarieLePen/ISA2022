@@ -5,6 +5,7 @@ import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,15 +29,23 @@ public class RegKorisnikCtrl {
 	@Autowired
 	private RegKorisnikService regKorisnikService;
 	
+	@PreAuthorize("hasAuthority('REGISTROVANI_KORISNIK')")
 	@PostMapping("/submitUpitnik/{id}")
 	public ResponseEntity<UpitnikDTO> submitUpitnik(@PathVariable(value="id")Long id, @RequestBody UpitnikDTO u){
 		UpitnikDTO retVal = regKorisnikService.submitUpitnik(u, id);
 		return  (retVal != null) ? new ResponseEntity<UpitnikDTO>(retVal, HttpStatus.OK) : new ResponseEntity<UpitnikDTO>(HttpStatus.ALREADY_REPORTED);	
 	}
+	@PreAuthorize("hasAnyAuthority('REGISTROVANI_KORISNIK')")
 	@GetMapping("/checkUpitnik/{id}")
-	public ResponseEntity<Boolean> checkUpitnik(@PathVariable(value="id") Long id) {
-		Boolean retVal = regKorisnikService.checkUpitnik(id);
-		return new ResponseEntity<Boolean>(retVal, HttpStatus.OK);
+	public ResponseEntity<UpitnikDTO> checkUpitnik(@PathVariable(value="id") Long id) {
+		UpitnikDTO retVal = regKorisnikService.checkUpitnik(id);
+		return retVal == null ? new ResponseEntity<UpitnikDTO>(HttpStatus.NO_CONTENT) : new ResponseEntity<UpitnikDTO>(retVal, HttpStatus.OK);
+	}
+	@PreAuthorize("hasAuthority('REGISTROVANI_KORISNIK')")
+	@PutMapping("/editUpitnik/{id}")
+	public ResponseEntity<UpitnikDTO> editUpitnik(@PathVariable(value="id")Long id, @RequestBody UpitnikDTO u){
+		UpitnikDTO retVal = regKorisnikService.editUpitnik(u, id);
+		return  (retVal != null) ? new ResponseEntity<UpitnikDTO>(retVal, HttpStatus.OK) : new ResponseEntity<UpitnikDTO>(HttpStatus.ALREADY_REPORTED);	 
 	}
 	
 	@GetMapping("/{id}")

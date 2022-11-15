@@ -45,17 +45,57 @@ public class RegKorisnikService {
 		upitnikRepository.save(temp);
 		return u;
 	}
-
-	public Boolean checkUpitnik(Long id) {
+	public UpitnikDTO editUpitnik(UpitnikDTO u, Long id) {
+		
 		RegKorisnik rk = this.regKorisnikRepository.findById(id).orElse(null);
-		if (rk != null) {
-			if (rk.getUpitnik() != null) {
-				return true;
+		if(rk == null) {
+			return null;
+		}
+		if(rk.getUpitnik() != null) {
+			Upitnik temp = rk.getUpitnik();
+			temp.setAdresa(u.getAdresa());
+			temp.setBrojPrethodnihDonacija(u.getBrojPrethodnihDonacija());
+			temp.setDatumRodjenja(u.getDatumRodjenja());
+			temp.setFirma_Ili_Skola(u.getFirma_Ili_Skola());
+			temp.setIme(u.getIme());
+			temp.setImeRoditelja(u.getImeRoditelja());
+			temp.setJmbg(u.getJmbg());
+			temp.setKucniTelefon(u.getKucniTelefon());
+			temp.setMesto(u.getMesto());
+			temp.setMobTelefon(u.getMobTelefon());
+			temp.setOpstina(u.getOpstina());
+			temp.setPol(u.getPol());
+			temp.setPoslovniTelefon(u.getPoslovniTelefon());
+			temp.setPrezime(u.getPrezime());
+			temp.setZanimanje(u.getZanimanje());
+					
+			upitnikRepository.saveAndFlush(temp);
+			return u;
+		}
+		return null;
+	}
+//	public Boolean checkUpitnik(Long id) {
+//		RegKorisnik rk = this.regKorisnikRepository.findById(id).orElse(null);
+//		if (rk != null) {
+//			if (rk.getUpitnik() != null) {
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
+	public UpitnikDTO checkUpitnik(Long id) {
+		RegKorisnik rk = this.regKorisnikRepository.findById(id).orElse(null);
+		if(rk != null) {
+			if(rk.getUpitnik() != null) {
+				Upitnik u = rk.getUpitnik();
+				UpitnikDTO retVal = this.upitnikMapper.toDTO(u);
+				
+				return retVal;
 			}
 		}
-		return false;
+		return null;
 	}
-
+	
 	public RegKorisnikDTO getRegKorisnik(Long id) {
 		return regMap.toDTO(regKorisnikRepository.getById(id));
 	}
