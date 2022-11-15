@@ -76,7 +76,7 @@ public class RegKorisnikMapper {
 		
 		Collection<TerminDTO> listaTermina = new ArrayList<TerminDTO>();
 		for(Termin t : rk.getTermini()) {
-			listaTermina.add(terminMapper.toDTO(t));
+			listaTermina.add(terminMapper.toDTOLite(t));
 		}
 		rdto.setTermini(listaTermina);
 		rdto.setTipKorisnika(rk.getTipKorisnika());

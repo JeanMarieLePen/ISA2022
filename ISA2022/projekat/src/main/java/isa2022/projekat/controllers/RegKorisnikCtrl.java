@@ -39,13 +39,16 @@ public class RegKorisnikCtrl {
 		return new ResponseEntity<Boolean>(retVal, HttpStatus.OK);
 	}
 	
-	@GetMapping("/registrovaniKorisnik/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<RegKorisnikDTO> getRegKorisnik(@PathVariable(value="id") Long id){
 		return new ResponseEntity<RegKorisnikDTO>(regKorisnikService.getRegKorisnik(id), HttpStatus.OK);
 	}
 	
 	@PutMapping(value="")
 	public ResponseEntity<RegKorisnikDTO> update(@RequestBody UpdateNalogDTO dto){
+		System.out.println(dto.getKorDTO().toString());
+		System.out.println(dto.getNovaSifraDTO().toString());
+
 		RegKorisnikDTO osvezeni= regKorisnikService.update(dto);
 		return new ResponseEntity<RegKorisnikDTO>(osvezeni, HttpStatus.OK);
 	}

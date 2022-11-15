@@ -68,7 +68,8 @@ public class RegKorisnikService {
 		k.setDatumRodjenja(dto.getKorDTO().getDatumRodjenja());
 
 		// ako je menjao sifru, ovaj deo koda se izvrsava
-		if (dto.getNovaSifraDTO() != null) {
+		if (dto.getNovaSifraDTO() != null && !dto.getNovaSifraDTO().getNovaSifra().equals("")) {
+			System.out.println("menjanaSifra");
 			BCryptPasswordEncoder t = new BCryptPasswordEncoder();
 			if (BCrypt.checkpw(dto.getNovaSifraDTO().getStaraSifra(), k.getLozinka())) {
 				String pw = t.encode(dto.getNovaSifraDTO().getNovaSifra());

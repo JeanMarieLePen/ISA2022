@@ -81,5 +81,18 @@ public class KorisnikDTO {
 	public void setTipKorisnika(TipKorisnika tipKorisnika) {
 		this.tipKorisnika = tipKorisnika;
 	}
+	@Override
+	public String toString() {
+		String email=	"Email	:	"+this.getEmail()+"\n";
+		String korIme=	"KorIme	:	"+this.getKorIme()+"\n";
+		String lozinka=	"Lozinka:	"+this.getLozinka()+"\n";
+		String ime=		"Ime	:	"+this.getIme()+"\n";
+		String prezime=	"Prezime: 	"+this.getPrezime()+"\n";
+		String adresa=	"Adresa	:	"+this.getAdresa()+"\n";
+		String datRodj= "DatRodj:	"+this.getDatumRodjenja()+"\n";
+		String poslDav=	"PoslDav:	"+this.getPoslednjaDonacija()+"\n";
+		return email+korIme+lozinka+ime+prezime+adresa+datRodj+poslDav;
+		//return super.toString();
+	}
 	
 }

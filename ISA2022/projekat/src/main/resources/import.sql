@@ -16,10 +16,10 @@ INSERT INTO public.kategorija(naziv, poeni) VALUES ('BRONZA', 30);
 
 
 --KORISNICI
-INSERT INTO public.korisnik(adresa, datum_rodjenja, email, ime, kor_ime, lozinka, poslednja_donacija, prezime, status_naloga, tip_korisnika) VALUES ('Sindjeliceva 22 Becej', '2022-04-14', 'temp@gmail.com', 'zdravko', 'premijer', '$2a$12$.RdHV2luFjgp5vR2LQSjWeLjU3WRzUEOmaqqsL51CD/L.5sPFoxoq', '2022-11-22', 'krivokapic', 0, 0);
-INSERT INTO public.korisnik(adresa, datum_rodjenja, email, ime, kor_ime, lozinka, poslednja_donacija, prezime, status_naloga, tip_korisnika) VALUES ('Arsenija Carnojevica 1 Becej', '1996-04-14', 'arsen@gmail.com', 'mirjana', 'ludamira', '$2a$12$.RdHV2luFjgp5vR2LQSjWeLjU3WRzUEOmaqqsL51CD/L.5sPFoxoq', '2022-11-22', 'markovic', 1, 1);
+INSERT INTO public.korisnik(adresa, datum_rodjenja, email, ime, kor_ime, lozinka, poslednja_donacija, prezime, status_naloga, tip_korisnika) VALUES ('Sindjeliceva 22 Becej', '2022-04-14', 'temp@gmail.com', 'zdravko', 'premijer', '$2a$12$.RdHV2luFjgp5vR2LQSjWeLjU3WRzUEOmaqqsL51CD/L.5sPFoxoq', '2022-11-22', 'krivokapic', 0, 1);
+INSERT INTO public.korisnik(adresa, datum_rodjenja, email, ime, kor_ime, lozinka, poslednja_donacija, prezime, status_naloga, tip_korisnika) VALUES ('Arsenija Carnojevica 1 Becej', '1996-04-14', 'arsen@gmail.com', 'mirjana', 'ludamira', '$2a$12$.RdHV2luFjgp5vR2LQSjWeLjU3WRzUEOmaqqsL51CD/L.5sPFoxoq', '2022-11-22', 'markovic', 1, 0);
 INSERT INTO public.korisnik(adresa, datum_rodjenja, email, ime, kor_ime, lozinka, poslednja_donacija, prezime, status_naloga, tip_korisnika) VALUES ('Nemanjina 11 Beograd', '2022-04-14', 'smajser@gmail.com', 'Slobodan', 'elpresidente', '$2a$12$.RdHV2luFjgp5vR2LQSjWeLjU3WRzUEOmaqqsL51CD/L.5sPFoxoq', '2022-11-22', 'milosevic', 2, 2);
-INSERT INTO public.korisnik(adresa, datum_rodjenja, email, ime, kor_ime, lozinka, poslednja_donacija, prezime, status_naloga, tip_korisnika) VALUES ('Svetozara Markovica 7 Nis', '2022-04-14', 'temp2@gmail.com', 'Milos', 'snp1389', '$2a$12$.RdHV2luFjgp5vR2LQSjWeLjU3WRzUEOmaqqsL51CD/L.5sPFoxoq', '2022-11-22', 'Markovic', 2, 0);
+INSERT INTO public.korisnik(adresa, datum_rodjenja, email, ime, kor_ime, lozinka, poslednja_donacija, prezime, status_naloga, tip_korisnika) VALUES ('Svetozara Markovica 7 Nis', '2022-04-14', 'temp2@gmail.com', 'Milos', 'snp1389', '$2a$12$.RdHV2luFjgp5vR2LQSjWeLjU3WRzUEOmaqqsL51CD/L.5sPFoxoq', '2022-11-22', 'Markovic', 2, 1);
 
 --RADNO VREME
 INSERT INTO public.radno_vreme(kraj, kraj_pauze, pocetak, pocetak_pauze) VALUES ('2022-06-19T01:26:05', '08:00:00', '2022-06-19T01:26:05', '08:00:00');
