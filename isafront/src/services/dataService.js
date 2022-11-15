@@ -40,6 +40,9 @@ class DataService{
     editUpitnik(upitnik, id){
         return axios.put(`${API_URL}/regkorisnik/editUpitnik/${id}`, upitnik);
     }
+    getCentarQuery(searchEntity){
+        return axios.post(`${API_URL}/medcentar/pretraga`, searchEntity);
+    }
 }
 
 export default new DataService();

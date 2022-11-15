@@ -40,6 +40,11 @@ export default{
     //         bus.$emit('loggedIn', false);
     //     }
     // }
+    methods:{
+        goToSearch(){
+            this.$router.push('/search')
+        }
+    }
 }
 
 </script>
