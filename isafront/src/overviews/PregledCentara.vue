@@ -1,6 +1,7 @@
 <template>
     <div style="width:100%">
         <table>
+            
             <tr>
                 <td>
                     <button class="filter-button" style="margin-left:10px" id="buttonSort" @click="tempSort('nazivEntiteta')">Naziv 
@@ -51,6 +52,26 @@
                 </div>
             </div>
         </section>
+
+        <section style="margin-top:200px;margin-left: 10px; margin-bottom:100px;">
+             <yandex-map 
+            :settings="settings"
+            :coords="koordinate"
+            zoom="5"
+            style="width: 50%; height: 600px;"
+            language=en-US
+            >
+
+            <ymap-marker
+                v-for="(tmp, index) in lokacije" :key="index" :marker-id="index" :coords="tmp.koordinateTemp" :balloon-template="balloonTemplate">
+            </ymap-marker>
+
+            <ymap-marker
+                :marker-id="1" :coords="koordinate" :balloon-template="balloonTemplate">
+            </ymap-marker>
+        </yandex-map>   
+
+        </section>
     </div>
 </template>
 
@@ -60,17 +81,37 @@
 
 import StarRating from 'vue-star-rating'
 import dataService from '../services/dataService';
+import { yandexMap, ymapMarker } from 'vue-yandex-maps'
+import { loadYmap } from 'vue-yandex-maps';
+import 'regenerator-runtime/runtime'
 
 export default{
     components:{
         starrating:StarRating,
-    },
+        yandexMap, ymapMarker
+    },  
     data(){
         return{
             listaCentara:[],
             currentSort : 'nazivEntiteta',
             currentSortDir : 'asc',
             inputFilter : '',
+
+            koordinate:[],
+            settings : {
+                apiKey: '5e04929d-e957-4fdd-b85c-08e60b3cb3f0',
+                lang: 'en_US',
+                coordorder: 'latlong',
+                enterprise: false,
+                version: '2.1',
+                
+            },
+            centri:[],
+            lokacije:[],
+            center: { 
+                lat: 39.7837304, 
+                lng: -100.4458825 
+            },
 
         }
     },
@@ -114,12 +155,37 @@ export default{
                 }
             }
             return tempList;
+        },
+        async getHospitals(){
+            return dataService.getAllHospitals().then(response => {
+                this.centri = response.data;
+                console.log("DOBAVLJENE BOLNICE: " + this.centri.length); 
+                for(let i = 0; i < this.centri.length; i++){
+                    // console.log("Adresa: " + this.centri[i].adresa);
+                    ymaps.geocode(this.centri[i].adresa).then(res => {
+                        let tmpObjekat = {
+                            koordinateTemp : res.geoObjects.get(0).geometry.getCoordinates()
+                        }
+                        this.lokacije.push(tmpObjekat);
+                        console.log(JSON.stringify(this.distance));
+                    });
+                }
+            });
         }
     },
     created(){
         dataService.getAllHospitals().then(response => {
             console.log("Status zahteva: " + response.status);
             this.listaCentara = response.data;
+
+            navigator.geolocation.getCurrentPosition(geolocation => {
+                this.center = {
+                    lat: geolocation.coords.latitude,
+                    lng: geolocation.coords.longitude
+                };
+                this.koordinate.push(geolocation.coords.latitude);
+                this.koordinate.push(geolocation.coords.longitude);
+            });
         });
     },
     computed:{
@@ -128,6 +194,17 @@ export default{
             let tempLista2 = this.sortiraj(tempLista);
             return tempLista2;
         },
+        balloonTemplate() {
+            return `
+                <h1 class="red">Medicinski centar!</h1>
+                <p>I am here: ${this.koordinate}</p>
+                <img src="http://via.placeholder.com/350x150">
+            `;
+        }
+    },
+    async mounted(){
+        await loadYmap({ ...this.settings, format:'json', debug: true});
+        await this.getHospitals();
     }
 }
 </script>

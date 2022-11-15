@@ -6,7 +6,13 @@ import Homepage from './main-components/Homepage'
 import PregledCentara from './overviews/PregledCentara'
 import SearchPage from './main-components/SearchPage'
 import Upitnik from './forms/Upitnik'
+import TestMape from './main-components/TestMape'
 export default[
+    {
+        path:`/maps`,
+        name:'TestMape',
+        component:TestMape
+    },
     {
         path:`/`,
         name:`Home`,

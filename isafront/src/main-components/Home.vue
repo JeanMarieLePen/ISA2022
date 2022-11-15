@@ -35,7 +35,11 @@ export default{
 
         }
     },
-    
+    // created(){
+    //     if(localStorage.getItem('token') == null){
+    //         bus.$emit('loggedIn', false);
+    //     }
+    // }
 }
 
 </script>

@@ -3,9 +3,12 @@ import AppMainFrame from './AppMainFrame.vue'
 import VueRouter from 'vue-router'
 import Routes from './routes'
 
+import YmapPlugin from 'vue-yandex-maps'
+
 export const bus = new Vue();
 
 Vue.use(VueRouter);
+
 
 Vue.config.productionTip=false;
 
@@ -13,6 +16,7 @@ const router = new VueRouter({
   mode:'history',
   routes:Routes
 });
+
 
 Vue.mixin({
   methods:{

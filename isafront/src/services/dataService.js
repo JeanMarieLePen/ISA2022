@@ -37,6 +37,9 @@ class DataService{
     checkUpitnik(id){
         return axios.get(`${API_URL}/regkorisnik/checkUpitnik/${id}`);
     }
+    editUpitnik(upitnik, id){
+        return axios.put(`${API_URL}/regkorisnik/editUpitnik/${id}`, upitnik);
+    }
 }
 
 export default new DataService();
