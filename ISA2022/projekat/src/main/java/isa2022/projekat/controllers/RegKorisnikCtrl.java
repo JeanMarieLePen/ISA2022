@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import isa2022.projekat.dtos.RegKorisnikDTO;
+import isa2022.projekat.dtos.UpdateNalogDTO;
 import isa2022.projekat.dtos.UpitnikDTO;
 import isa2022.projekat.services.RegKorisnikService;
 
@@ -52,4 +54,21 @@ public class RegKorisnikCtrl {
 		return  (retVal != null) ? new ResponseEntity<UpitnikDTO>(retVal, HttpStatus.OK) : new ResponseEntity<UpitnikDTO>(HttpStatus.ALREADY_REPORTED);	 
 	}
 	
+	@GetMapping("/registrovaniKorisnik/{id}")
+	public ResponseEntity<RegKorisnikDTO> getRegKorisnik(@PathVariable(value="id") Long id){
+		return new ResponseEntity<RegKorisnikDTO>(regKorisnikService.getRegKorisnik(id), HttpStatus.OK);
+	}
+	
+	@PutMapping(value="")
+	public ResponseEntity<RegKorisnikDTO> update(@RequestBody UpdateNalogDTO dto){
+		RegKorisnikDTO osvezeni= regKorisnikService.update(dto);
+		return new ResponseEntity<RegKorisnikDTO>(osvezeni, HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value="deleteRegistrovaniKorisnik/{id}")
+	public ResponseEntity<Boolean> delete(@PathVariable(value="id") Long id){
+		Boolean obrisan=regKorisnikService.deleteRegKor(id);
+		HttpStatus status=  obrisan.equals(true) ? HttpStatus.OK : HttpStatus.OK;
+		return new ResponseEntity<Boolean>(obrisan, HttpStatus.OK);
+	}
 }
