@@ -43,6 +43,12 @@ class DataService{
     getCentarQuery(searchEntity){
         return axios.post(`${API_URL}/medcentar/pretraga`, searchEntity);
     }
+    getUser(id){
+        return axios.get(`${API_URL}/regkorisnik/${id}`);
+    }
+    updateUserProfile(objekat){
+        return axios.put(`${API_URL}/regkorisnik/`, objekat);
+    }
 }
 
 export default new DataService();

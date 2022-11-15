@@ -243,7 +243,7 @@ export default{
             let tempUsername = localStorage.getItem('parsToken').split(",")[0].split(':')[1];
             tempUsername = tempUsername.slice(1, tempUsername.length - 1).trim();
             let tempRole = localStorage.getItem('parsToken').split(",")[1].split(":")[1];
-            tempRole = tempRole.trim();
+            tempRole = tempRole.slice(1, tempRole.length - 1).trim();
             let tempId = localStorage.getItem('parsToken').split(",")[3].split(':')[1];
             tempId = tempId.trim();
 
@@ -253,13 +253,13 @@ export default{
             console.log('temp role je : ' + tempRole);
 
 
-            if(tempRole = 'ADMINISTRATOR'){;
+            if(tempRole === 'ADMINISTRATOR'){
                 this.role = 'ADMINISTRATOR';
-            }else if(tempRole = 'MEDICINSKO_OSOBLJE'){
+            }else if(tempRole === 'MEDICINSKO_OSOBLJE'){
                 this.role = 'MEDICINSKO_OSOBLJE';
-            }else if(tempRole = 'ADMINISTRATOR_USTANOVE'){
+            }else if(tempRole === 'ADMINISTRATOR_USTANOVE'){
                 this.role = 'ADMINISTRATOR_USTANOVE';
-            }else if(tempRole = 'REGISTROVANI_KORISNIK'){
+            }else if(tempRole === 'REGISTROVANI_KORISNIK'){
                 this.role = 'REGISTROVANI_KORISNIK';
             }else{
                 console.log('error');

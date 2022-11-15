@@ -7,6 +7,10 @@ import PregledCentara from './overviews/PregledCentara'
 import SearchPage from './main-components/SearchPage'
 import Upitnik from './forms/Upitnik'
 
+import UserRegProfile from './main-components/UserRegProfile'
+import UserRegupdateProfile from './main-components/UserRegupdateProfile'
+
+
 export default[
     {
         path:`/`,
@@ -42,6 +46,21 @@ export default[
         path:`/upitnik`,
         name:"Upitnik",
         component:Upitnik
-    }
+    },
+    {
+        path:'/profile/:id',
+        name:'UserProfile',
+        component:UserRegProfile
+    },
+    {
+        path:'/profile/',
+        name:'UserProfile',
+        component:UserRegProfile
+    },
+    {
+        path:'/profile/:id/update',
+        name:'UserUpdateProfile',
+        component:UserRegupdateProfile
+    },
 ]
    
