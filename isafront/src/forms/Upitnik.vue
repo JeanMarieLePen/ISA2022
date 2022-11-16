@@ -35,8 +35,16 @@
                 </tr>
                 <tr v-show="show2">
                     <td>
-                        <datepicker id="dtpckr" @pick="updateDatePicker" style="margin-top:10px;margin-bottom:10px;width:100%;">
+                        <!-- <datepicker type="date" id="dtpckr" @pick="updateDatePicker" v-model="upitnik.datumRodjenja" style="margin-top:10px;margin-bottom:10px;">
 
+                        </datepicker> -->
+
+                        <datepicker v-model="upitnik.datumRodjenja"
+                            format="YYYY-MM-DD"
+                            style="width:100%;margin-top:10px;margin-bottom:10px;"
+                            type="date"
+                            placeholder="Select date"
+                            id="dtpckr">
                         </datepicker>
                     </td>
                 </tr>
@@ -158,8 +166,14 @@
                 </tr>
                 <tr v-show="show2">
                     <td>
-                        <datepicker id="dtpckr" @pick="updateDatePicker" style="margin-top:10px;margin-bottom:10px;width:100%;">
+                        <!-- <datepicker id="dtpckr" @pick="updateDatePicker" style="margin-top:10px;margin-bottom:10px;width:100%;">
 
+                        </datepicker> -->
+                        <datepicker  format="YYYY-MM-DD"
+                            style="width:100%;margin-top:10px;margin-bottom:10px;"
+                            type="date"
+                            placeholder="Select date"
+                            id="dtpckr">
                         </datepicker>
                     </td>
                 </tr>
@@ -292,6 +306,7 @@ export default{
             })
         },
         submitForm(){
+            this.formatDatum();
             dataService.submitUpitnik(this.upitnik, this.userId).then(response => {
                 console.log("Poslata forma: " + JSON.stringify(this.upitnik));
                 if(response.status === 200){
@@ -334,6 +349,11 @@ export default{
             this.show2 = false;
             this.show3 = false;
             this.show4 = true;
+        },
+        formatDatum(){
+            let tempDatum = moment(this.upitnik.datumRodjenja).format('YYYY-MM-DD');
+            this.upitnik.datumRodjenja = tempDatum;
+            console.log("Datum posle formatiranja: " + tempDatum);
         },
         updateDatePicker(val1){
             console.log("Odabran datum: " + val1)
@@ -451,6 +471,7 @@ export default{
     display: flex;
     justify-content: left;
 }
+
 
 div{
   display: flex;

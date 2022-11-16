@@ -1,6 +1,6 @@
 <template>
     <div id="div1" class="home_class" style="margin-bottom:100px;">
-        <section id="sec1">
+        <section id="sec1" @click="goToSearch()">
             <h2>
                 Trazite brz i jednostavan nacin da pronadjete lokaciju centara za donaciju krvi? <span id="AppBold">TempNameApp</span> je aplikacija za Vas!
             </h2>
