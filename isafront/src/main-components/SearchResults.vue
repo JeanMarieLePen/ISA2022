@@ -20,6 +20,12 @@
                         <img v-if='currentSortDir == "desc" && currentSort== "ocenaEntiteta" ' src='../assets/down-arrow1.1.png'>
                     </button>
                 </td>
+                <td>
+                    <button class="filter-button" id="buttonSort"  @click="tempSort('razdaljinaEntiteta')">Razdaljina
+                        <img v-if='currentSortDir == "asc" && currentSort== "razdaljinaEntiteta"' src='../assets/up-arrow1.1.png'>
+                        <img v-if='currentSortDir == "desc" && currentSort== "razdaljinaEntiteta" ' src='../assets/down-arrow1.1.png'>
+                    </button>
+                </td>
             </tr>
             <tr>
                 <td colspan="3">
@@ -40,10 +46,11 @@
                                 <h5 class="card-title">Ustanova {{tempHospital.naziv}}</h5>
                                 <p class="card-text">Ustanova {{tempHospital.naziv}}</p>
                                 <p class="card-text">{{tempHospital.adresa}}</p>
+                                <p class="card-text">Udaljenost: {{tempHospital.razdaljina}}</p>
                                 <starrating style="margin-bottom:10px" read-only v-model="tempHospital.ocena" :star-size="20"/>
                                 
                             </div>
-                            <div style="margin-bottom:30px;margin-top:50px;" class="card-foot">
+                            <div style="margin-bottom:30px;margin-top:px;" class="card-foot">
                             <button style="margin-left:30px;" v-on:click="hospitalDetails(tempHospital.id)" class="btn btn-primary">Detalji</button>
                         </div>
                         </div>
@@ -113,6 +120,14 @@ export default{
                 }
                 else{
                     tempList = tmpLista.sort((a, b) => (a.ocena < b.ocena) ? 1 : -1);
+                }
+            }
+            if(this.currentSort == 'razdaljinaEntiteta'){
+                if(this.currentSortDir == 'asc'){
+                    tempList = tmpLista.sort((a, b) => (a.razdaljina > b.razdaljina) ? 1 : -1);
+                }
+                else{
+                    tempList = tmpLista.sort((a, b) => (a.razdaljina < b.razdaljina) ? 1 : -1);
                 }
             }
             return tempList;
