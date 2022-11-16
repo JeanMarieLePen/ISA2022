@@ -29,7 +29,7 @@ public class RegKorisnikCtrl {
 	@Autowired
 	private RegKorisnikService regKorisnikService;
 	
-	@PreAuthorize("hasAuthority('REGISTROVANI_KORISNIK')")
+	@PreAuthorize("hasAnyAuthority('REGISTROVANI_KORISNIK')")
 	@PostMapping("/submitUpitnik/{id}")
 	public ResponseEntity<UpitnikDTO> submitUpitnik(@PathVariable(value="id")Long id, @RequestBody UpitnikDTO u){
 		UpitnikDTO retVal = regKorisnikService.submitUpitnik(u, id);
