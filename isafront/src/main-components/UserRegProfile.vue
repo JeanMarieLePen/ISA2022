@@ -14,7 +14,7 @@
                     </li>
                     <li class="list-group-item" >
                         <h5 class="header5">Korisnicko ime</h5>
-                        <h4>{{profile.korisnickoIme}}</h4>
+                        <h4>{{profile.korIme}}</h4>
                     </li>
                     <li class="list-group-item">
                         <h5 class="header5">Email adresa</h5>
