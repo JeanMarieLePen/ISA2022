@@ -1,5 +1,7 @@
 package isa2022.projekat.controllers;
 
+import java.util.Collection;
+
 import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import isa2022.projekat.dtos.RegKorisnikDTO;
+import isa2022.projekat.dtos.TerminDTO;
 import isa2022.projekat.dtos.UpdateNalogDTO;
 import isa2022.projekat.dtos.UpitnikDTO;
 import isa2022.projekat.services.RegKorisnikService;
@@ -68,4 +71,11 @@ public class RegKorisnikCtrl {
 		HttpStatus status=  obrisan.equals(true) ? HttpStatus.OK : HttpStatus.OK;
 		return new ResponseEntity<Boolean>(obrisan, HttpStatus.OK);
 	}
+	
+	@GetMapping(value="/getTermini/{id}")
+	public ResponseEntity<Collection<TerminDTO>> getTermineByKorisnik(@PathVariable(value="id") Long id){
+		return this.regKorisnikService.getAllTerminiByKorisnik(id) == null ? new ResponseEntity<Collection<TerminDTO>>(HttpStatus.NO_CONTENT) :
+			new ResponseEntity<Collection<TerminDTO>>(this.regKorisnikService.getAllTerminiByKorisnik(id), HttpStatus.OK);
+	}
+
 }

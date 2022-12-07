@@ -99,10 +99,10 @@ public class Termin {
 		this.listaPrijavljenih = listaPrijavljenih;
 	}
 	public int getBrSlobodnihMesta() {
-		return this.brojMesta - this.listaPrijavljenih.size();
+		return this.brSlobodnihMesta;
 	}
 	public void setBrSlobodnihMesta(int brSlobodnihMesta) {
-		this.brSlobodnihMesta = this.brojMesta - this.listaPrijavljenih.size();
+		this.brSlobodnihMesta = brSlobodnihMesta;
 	}
 	
 	

@@ -1,5 +1,7 @@
 package isa2022.projekat.services;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -11,13 +13,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import isa2022.projekat.dtos.RegKorisnikDTO;
+import isa2022.projekat.dtos.TerminDTO;
 import isa2022.projekat.dtos.UpdateNalogDTO;
 import isa2022.projekat.dtos.UpitnikDTO;
 import isa2022.projekat.mappers.RegKorisnikMapper;
+import isa2022.projekat.mappers.TerminMapper;
 import isa2022.projekat.mappers.UpitnikMapper;
+import isa2022.projekat.model.data.Termin;
 import isa2022.projekat.model.data.Upitnik;
 import isa2022.projekat.model.korisnici.RegKorisnik;
 import isa2022.projekat.repositories.RegKorisnikRepository;
+import isa2022.projekat.repositories.TerminRepository;
 import isa2022.projekat.repositories.UpitnikRepository;
 
 @Service
@@ -31,6 +37,10 @@ public class RegKorisnikService {
 	private UpitnikRepository upitnikRepository;
 	@Autowired
 	RegKorisnikMapper regMap;
+	@Autowired
+	private TerminRepository terminRepository;
+	@Autowired 
+	private TerminMapper terminMapper;
 
 	public UpitnikDTO submitUpitnik(UpitnikDTO u, Long id) {
 		RegKorisnik rk = this.regKorisnikRepository.findById(id).orElse(null);
@@ -131,5 +141,18 @@ public class RegKorisnikService {
 		}else {
 			return false;
 		}
+	}
+	public Collection<TerminDTO> getAllTerminiByKorisnik(Long id) {
+		// TODO Auto-generated method stub
+		RegKorisnik rk = this.regKorisnikRepository.findById(id).orElse(null);
+		if(rk==null) {
+			return null;
+		}
+		
+		Collection<TerminDTO> retList = new ArrayList<TerminDTO>();
+		for(Termin t:rk.getTermini()) {
+			retList.add(this.terminMapper.toDTO(t));
+		}
+		return retList;
 	}
 }

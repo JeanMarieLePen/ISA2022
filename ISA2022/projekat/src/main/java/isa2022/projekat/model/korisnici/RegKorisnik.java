@@ -49,7 +49,7 @@ public class RegKorisnik extends Korisnik{
 //	@ManyToOne(optional = true, fetch = FetchType.LAZY)
 //	private Termin termin;
 	
-	@ManyToMany
+	@ManyToMany(cascade = { CascadeType.ALL })
 	@JoinTable(name="regkorisnik_termini", joinColumns = @JoinColumn(name="termin_id"),
 	inverseJoinColumns = @JoinColumn(name="regkorisnik_id"))
 	private Collection<Termin> termini;

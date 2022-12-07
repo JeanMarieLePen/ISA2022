@@ -4,6 +4,7 @@ import java.util.Collection;
 
 public class MedCentarDTO {
 
+	private Long id;
 	private String naziv;
 	private String adresa;
 	private String opis;
@@ -24,6 +25,12 @@ public class MedCentarDTO {
 	}
 	public void setNaziv(String naziv) {
 		this.naziv = naziv;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public String getAdresa() {
 		return adresa;

@@ -5,6 +5,7 @@ import java.util.Collection;
 
 public class TerminDTO {
 
+	private Long id;
 	private MedCentarDTO medCentar;
 	private LocalDateTime pocetakTermina;
 	private LocalDateTime krajTermina;
@@ -16,6 +17,14 @@ public class TerminDTO {
 
 	public TerminDTO() {
 		super();
+	}
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public MedCentarDTO getMedCentar() {

@@ -23,6 +23,7 @@ public class MedCentarMapper {
 
 	public MedCentarDTO toDTO(MedCentar mc) {
 		MedCentarDTO temp = new MedCentarDTO();
+		temp.setId(mc.getId());
 		temp.setAbGrupa(mc.getAbGrupa());
 		temp.setAdresa(mc.getAdresa());
 		temp.setaGrupa(mc.getaGrupa());

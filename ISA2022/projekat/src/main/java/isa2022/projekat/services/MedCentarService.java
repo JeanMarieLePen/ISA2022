@@ -8,22 +8,30 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 
 import isa2022.projekat.dtos.MedCentarDTO;
 import isa2022.projekat.dtos.PretragaDTO;
+import isa2022.projekat.dtos.TerminDTO;
 import isa2022.projekat.mappers.MedCentarMapper;
+import isa2022.projekat.mappers.TerminMapper;
 import isa2022.projekat.model.data.MedCentar;
 import isa2022.projekat.model.data.Termin;
+import isa2022.projekat.model.korisnici.RegKorisnik;
 import isa2022.projekat.repositories.MedCentarRepository;
+import isa2022.projekat.repositories.RegKorisnikRepository;
+import isa2022.projekat.repositories.TerminRepository;
 
 @Service
 public class MedCentarService {
@@ -32,6 +40,15 @@ public class MedCentarService {
 	private MedCentarRepository medCentarRepository;
 	@Autowired
 	private MedCentarMapper medCentarMapper;
+	
+	@Autowired 
+	private TerminMapper terminMapper;
+	@Autowired 
+	private TerminRepository terminRepository;
+	@Autowired
+	private RegKorisnikRepository regKorisnikRepository;
+	@Autowired
+	private EmailService emailService;
 	
 	public Collection<MedCentarDTO> getAll(){
 		Collection<MedCentar> lista = this.medCentarRepository.findAll();
@@ -100,5 +117,83 @@ public class MedCentarService {
 	public LocalDateTime zaokruzi(LocalDateTime t) {
 		LocalDateTime z=t.withHour(0).withMinute(0).withSecond(0).withNano(0);
 		return z;
+	}
+
+	public MedCentarDTO getCentarById(Long id) {
+		// TODO Auto-generated method stub
+		MedCentar mc = this.medCentarRepository.findById(id).orElse(null);
+		if(mc == null) {
+			return null;
+		}
+		return this.medCentarMapper.toDTO(mc);
+	}
+
+	public Collection<TerminDTO> getTermineByIdCentra(Long id) {
+		// TODO Auto-generated method stub
+		MedCentar medCentar = this.medCentarRepository.findById(id).orElse(null);
+		if(medCentar == null) {
+			return null;
+		}
+		Collection<Termin> listaTermina = medCentar.getTermini();
+		Collection<TerminDTO> retList = new ArrayList<TerminDTO>();
+		for(Termin t:listaTermina) {
+			retList.add(this.terminMapper.toDTO(t));
+		}
+		return retList;
+	}
+
+	
+	@Lock(LockModeType.PESSIMISTIC_WRITE)
+	@Transactional
+	public TerminDTO terminReserve(Long userId, Long terminId) {
+		// TODO Auto-generated method stub
+		Termin t = this.terminRepository.findById(terminId).orElse(null);
+		RegKorisnik kor = this.regKorisnikRepository.findById(userId).orElse(null);
+		if(t == null) {
+			return null;
+		}
+		if(kor == null) {
+			return null;
+		}
+		if(t.getBrSlobodnihMesta() > 0) {
+			int tmp = t.getListaPrijavljenih().size();
+			for(RegKorisnik rk : t.getListaPrijavljenih()) {
+				if(rk.getId() == userId) {
+					return null;
+				}
+			}
+			
+			t.getListaPrijavljenih().add(kor);
+			t.setBrSlobodnihMesta(t.getBrojMesta() - t.getListaPrijavljenih().size());
+			kor.getTermini().add(t);
+			
+			this.terminRepository.save(t);
+			this.regKorisnikRepository.save(kor);
+			
+			this.emailService.sendReservationNotificationMail(kor, t.getMedCentar(), t);
+		}
+		TerminDTO retVal = this.terminMapper.toDTO(t);
+		return retVal;
+	}
+
+	public TerminDTO cancelTermin(Long id, Long userId) {
+		// TODO Auto-generated method stub
+		Termin t = this.terminRepository.findById(id).orElse(null);
+		if(t == null) {
+			return null;
+		}
+		for(RegKorisnik rk : t.getListaPrijavljenih()) {
+			if(rk.getId().equals(userId)) {
+				t.getListaPrijavljenih().remove(rk);
+				rk.getTermini().remove(t);
+				t.setBrSlobodnihMesta(t.getBrSlobodnihMesta() + 1);
+				this.terminRepository.save(t);
+				this.regKorisnikRepository.save(rk);
+				this.emailService.sendReservationCancelationNotificationMail(rk, t.getMedCentar(), t);
+				break;
+			}
+		}
+		TerminDTO retVal = this.terminMapper.toDTO(t);
+		return retVal;
 	}
 }

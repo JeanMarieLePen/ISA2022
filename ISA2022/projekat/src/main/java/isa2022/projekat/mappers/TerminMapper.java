@@ -36,6 +36,7 @@ public class TerminMapper {
 	
 	public TerminDTO toDTO(Termin t) {
 		TerminDTO tdto = new TerminDTO();
+		tdto.setId(t.getId());
 		tdto.setBrojMesta(t.getBrojMesta());
 		tdto.setBrSlobodnihMesta(t.getBrSlobodnihMesta());
 		tdto.setKrajTermina(t.getKrajTermina());
