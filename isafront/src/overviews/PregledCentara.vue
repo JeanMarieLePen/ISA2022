@@ -116,6 +116,9 @@ export default{
         }
     },
     methods:{
+        hospitalDetails(id){
+            this.$router.push(`/medCentar/${id}`);
+        },
         tempSort(s){
             if (s === this.currentSort) {
                 this.currentSortDir = this.currentSortDir === 'asc' ? 'desc' : 'asc';
@@ -176,6 +179,7 @@ export default{
     created(){
         dataService.getAllHospitals().then(response => {
             console.log("Status zahteva: " + response.status);
+            console.log("JEDNA BOLNICA: " + JSON.stringify(response.data[0]))
             this.listaCentara = response.data;
 
             navigator.geolocation.getCurrentPosition(geolocation => {

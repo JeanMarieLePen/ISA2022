@@ -10,6 +10,9 @@ import Upitnik from './forms/Upitnik'
 import UserRegProfile from './main-components/UserRegProfile'
 import UserRegupdateProfile from './main-components/UserRegupdateProfile'
 
+import MedCentar from './overviews/MedCentar'
+import Termini from './overviews/Termini'
+import ZakazaniTerminiKorisnika from './overviews/ZakazaniTerminiKorisnika'
 
 export default[
     {
@@ -62,5 +65,20 @@ export default[
         name:'UserUpdateProfile',
         component:UserRegupdateProfile
     },
+    {
+        path:'/medcentar/:id',
+        name:'MedCentar',
+        component:MedCentar
+    },
+    {
+        path:`/termini/:id`,
+        name:'Termini',
+        component:Termini
+    },
+    {
+        path:`/bookedTermini`,
+        name:'ZakazaniTerminiKorisnika',
+        component:ZakazaniTerminiKorisnika
+    }
 ]
    

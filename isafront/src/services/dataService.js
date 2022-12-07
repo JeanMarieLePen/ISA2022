@@ -49,6 +49,21 @@ class DataService{
     updateUserProfile(objekat){
         return axios.put(`${API_URL}/regkorisnik/`, objekat);
     }
+    getMedCentarById(id){
+        return axios.get(`${API_URL}/medcentar/getById/${id}`);
+    }
+    getTermineMedCentar(id){
+        return axios.get(`${API_URL}/medcentar/getTermineById/${id}`);
+    }
+    terminReserve(userId, terminId){
+        return axios.put(`${API_URL}/medcentar/terminReserve/${userId}/${terminId}`);
+    }
+    getTermineByKorisnik(userId){
+        return axios.get(`${API_URL}/regkorisnik/getTermini/${userId}`);
+    }
+    cancelTermin(id, userId){
+        return axios.put(`${API_URL}/medcentar/cancelTermin/${id}/${userId}`);
+    }
 }
 
 export default new DataService();
