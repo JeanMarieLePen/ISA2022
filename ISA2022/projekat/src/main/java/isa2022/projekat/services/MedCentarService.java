@@ -1,7 +1,9 @@
 package isa2022.projekat.services;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -162,11 +164,27 @@ public class MedCentarService {
 			System.out.println("Nije popunjen upitnik!");
 			return new ResponseEntity<TerminDTO>(HttpStatus.ALREADY_REPORTED);
 		}
-		List<MedCentar> tempMd = this.medCentarRepository.findAllByTermini_ListaPrijavljenih_Id(userId);
-		if(tempMd.size() != 0) {
-			System.out.println("Vec imate rezervisan termin u ovom centru");
-			return new ResponseEntity<TerminDTO>(HttpStatus.IM_USED);
+		//dobavlja sve termine koji u listi prijavljenih imaju korisnika sa id-om userId
+		List<MedCentar> listaCentara = this.medCentarRepository.findAllByTermini_ListaPrijavljenih_Id(userId);
+		for(MedCentar tmpMd : listaCentara) {
+			if(tmpMd.getId() == t.getMedCentar().getId()) {
+				System.out.println("Vec imate rezervisan termin u ovom centru.");
+				return new ResponseEntity<TerminDTO>(HttpStatus.IM_USED);
+			}
 		}
+		
+		LocalDate now = LocalDate.now();
+		LocalDate lastDonation = kor.getPoslednjaDonacija();
+		long days = ChronoUnit.DAYS.between(lastDonation, now);
+		if(days<=(30*6)) {
+			System.out.println("Vec ste donirali krv u prethodnih 6 meseci.");
+			return new ResponseEntity<TerminDTO>(HttpStatus.MULTI_STATUS);
+		}
+//		varijanta u kojoj se ne dozvoljava zakazivanje ukoliko korisnik prethodno ima zakazan termin u bilo kom od centara
+//		if(listaCentara.size() != 0) {
+//			System.out.println("Vec imate rezervisan termin u nekom od centara.");
+//			return new ResponseEntity<TerminDTO>(HttpStatus.IM_USED);
+//		}
 		
 		if(t.getBrSlobodnihMesta() > 0) {
 			
@@ -185,7 +203,7 @@ public class MedCentarService {
 			this.terminRepository.save(t);
 			this.regKorisnikRepository.save(kor);
 			
-//			this.emailService.sendReservationNotificationMail(kor, t.getMedCentar(), t);
+			this.emailService.sendReservationNotificationMail(kor, t.getMedCentar(), t);
 //			this.emailService.sendReservationNotificationMail(kor, t.getMedCentar(), t);
 		}
 		TerminDTO retVal = this.terminMapper.toDTO(t);
