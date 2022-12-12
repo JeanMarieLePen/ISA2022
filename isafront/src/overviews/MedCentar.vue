@@ -91,9 +91,9 @@
                                     v-for="(tmp, index) in lokacija" :key="index" :marker-id="index" :coords="tmp.koordinateTemp" :balloon-template="balloonTemplate">
                                 </ymap-marker>
 
-                                <ymap-marker
+                                <!-- <ymap-marker
                                     :marker-id="1" :coords="pocetneKoordinate" :balloon-template="balloonTemplate">
-                                </ymap-marker>
+                                </ymap-marker> -->
                             </yandex-map> 
                         </td>
                     </tr>
@@ -133,9 +133,7 @@ export default {
                 
             },
             pocetneKoordinate:[],
-            lokacija:{
-
-            },
+            lokacija:[],
             radnoVreme:'',
             selectedGroup:1,
             idCentra:'',
@@ -165,12 +163,26 @@ export default {
                 this.medCentar = response.data;
                 this.bloodReserve = this.medCentar.aGrupa;
                 this.radnoVreme = moment(this.medCentar.radnoVreme.pocetak).format("HH:MM") + '-' +moment(this.medCentar.radnoVreme.kraj).format("HH:MM")
-                ymaps.geocode(this.medCentar.adresa).then(response => {
+                console.log("RADNO VREME: " + this.radnoVreme)
+                
+                ymaps.geocode(this.medCentar.adresa).then(res => {
+                    console.log("ADRESA: " + this.medCentar.adresa)
                     let tmpObjekat = {
-                        koordinateTemp : response.getObjects.get(0).geometry.getCoordinates()
+                        koordinateTemp : res.geoObjects.get(0).geometry.getCoordinates()
                     }
-                    this.lokacija = tmpObjekat;
-                })
+                    console.log("tmpObjekat: " + JSON.stringify(tmpObjekat));
+                    // this.lokacije.push(tmpObjekat);
+                    this.lokacija.push(tmpObjekat);
+                    console.log("LOKACIJA: " + JSON.stringify(this.lokacija));
+                });
+                // ymaps.geocode(this.medCentar.adresa).then(response => {
+                //     let tmpObjekat = {
+                //         koordinateTemp : response.getObjects.get(0).geometry.getCoordinates()
+                //     }
+                //     console.log("tmpObjekat: " + JSON.stringify(tmpObjekat));
+                //     this.lokacija.push(tmpObjekat);
+                //     console.log("LOKACIJA: " + JSON.stringify(this.lokacija))
+                // });
             }); 
         },
         showTermine(){
@@ -194,7 +206,8 @@ export default {
         balloonTemplate() {
             return `
                 <h1 class="red">Medicinski centar!</h1>
-                <p>I am here: ${this.koordinate}</p>
+                <p>Adresa centra: ${this.medCentar.adresa}</p>
+                <p>Ocena centra: ${this.medCentar.ocena}</p>
                 <img src="http://via.placeholder.com/350x150">
             `;
         }

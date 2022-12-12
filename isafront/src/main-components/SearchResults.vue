@@ -39,8 +39,8 @@
             <div>
             <!-- if we are 3 cards wide start a new row -->
                 <div class="row">
-                    <div class="col-md-3" v-bind:key="index" v-for="(tempHospital, index) in sortEntities.slice(0,15)">
-                        <div style="width:90%;height:250px; margin-bottom:100px;" class="card">
+                    <div class="col-md-4" v-bind:key="index" v-for="(tempHospital, index) in sortEntities.slice(0,15)">
+                        <div style="width:90%;height:300px; margin-bottom:100px;" class="card">
                             <!-- <img class="card-img-top" :src="product.thumbnailUrl" alt="card image collar"> -->
                             <div class="card-body">
                                 <h5 class="card-title">Ustanova {{tempHospital.naziv}}</h5>

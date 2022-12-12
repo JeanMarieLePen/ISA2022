@@ -14,7 +14,7 @@
                     <p class="card-text">Preostalo vreme: {{calcTime(t)}}</p>
                 </div>
                 <div class="card-footer" style="height:150px;">
-                    <button v-show="calcTime(t)>=24" @click="cancelTermin(t, index)">Otkazi</button>
+                    <button v-show="calcTime2(t) >= 24" @click="cancelTermin(t, index)">Otkazi</button>
                     <div style="margin:10px;" v-if="messages[index].successMessage" v-html="messages[index].successMessage" class="alert alert-success">
                     
                     </div>
@@ -62,6 +62,18 @@ export default {
             console.log("diffDays: " + diffDays)
             console.log("diffHours: " + diffHours)
             return diffDays + ' dana(' + diffHours + ' sati)';
+        },
+        calcTime2(termin){
+            console.log("Pocetak: " + termin.krajTermina)
+            const date1 = new Date(termin.krajTermina);
+            const date2 = new Date();
+            const diffTime = date2.getTime() - date1.getTime();
+            const diffDays = Math.floor(Math.abs(diffTime / (1000 * 3600 * 24)));
+            const diffHours = Math.floor(Math.abs(diffTime / (1000 * 3600)));
+            console.log("diffTime: " + diffTime)
+            console.log("diffDays: " + diffDays)
+            console.log("diffHours: " + diffHours)
+            return diffHours;
         },
         cancelTermin(termin, index){
             try{
