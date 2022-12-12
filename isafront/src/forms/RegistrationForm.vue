@@ -22,9 +22,10 @@
                             <br>
                             <h4>
                             <input type="radio" v-model="form.tipKorisnika" required value="REGISTROVANI_KORISNIK"> Registrovani korisnik <br><br>
-                            <input type="radio" v-model="form.tipKorisnika" required value="MEDICINSKO_OSOBLJE"> Medicinski radnik <br><br>
+                            <!-- <input type="radio" v-model="form.tipKorisnika" required value="MEDICINSKO_OSOBLJE"> Medicinski radnik <br><br>
                             <input type="radio" v-model="form.tipKorisnika" required value="ADMINISTRATOR_USTANOVE"> Administrator centra <br><br>
-                            <input type="radio" v-model="form.tipKorisnika" required value="ADMINISTRATOR"> Administrator</h4> <br>
+                            <input type="radio" v-model="form.tipKorisnika" required value="ADMINISTRATOR"> Administrator -->
+                            </h4> <br>
                         </div>
 
                         

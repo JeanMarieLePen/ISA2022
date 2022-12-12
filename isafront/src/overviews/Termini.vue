@@ -1,9 +1,9 @@
 <template>
     <div>
         <h1>Pregled termina centra</h1>
-        <div v-show="listaTermina.length > 0" class="row">
-            <div class="col-md-3" style="width:20%;margin:20px;height:300px;" v-for="(tempTermin, index) in listaTermina" v-bind:key="index">          
-                <div style="width:90%;height:500px; margin-bottom:100px;" class="card">
+        <div v-show="listaTermina.length > 0" class="row" style="margin-top:100px;margin-bottom:100px;">
+            <div class="col-md-3" style="width:20%;margin:20px;height:300px;margin-bottom:200px;" v-for="(tempTermin, index) in listaTermina" v-bind:key="index">          
+                <div style="width:90%;height:500px; " class="card">
                     <div style="text-align:center" class="card-title">
                         <h2>Termin: {{tempTermin.id}}</h2>
                     </div>
@@ -78,8 +78,17 @@ export default {
                         this.messages[index].successMessage = '<h4>Uspesna rezervacija.</h4>';
                         setTimeout(() => this.messages[index].successMessage='', 3000);
                         setTimeout(() => this.getTermine2(), 3050);
-                    }else{
+                    }else if(response.status == 226){
                         this.messages[index].errorMessage = '<h4>Vec ste rezervisali.</h4>';
+                        setTimeout(() => this.messages[index].errorMessage='', 3000);
+                        setTimeout(() => this.getTermine2(), 3050);
+                    }else if(response.status == 208){
+                        this.messages[index].errorMessage = '<h4>Niste popunili obavezni upitnik.</h4>';
+                        setTimeout(() => this.messages[index].errorMessage='', 3000);
+                        setTimeout(() => this.getTermine2(), 3050);
+                    }
+                    else{
+                        this.messages[index].errorMessage = '<h4>Neuspesna rezervacija.</h4>';
                         setTimeout(() => this.messages[index].errorMessage='', 3000);
                         setTimeout(() => this.getTermine2(), 3050);
                     }
@@ -93,7 +102,10 @@ export default {
                 
         },
         datumFormat(datum){
-            return moment(datum).format("YYYY-mm-ddd hh:mm")
+            console.log("DATUM PRE FORMATIRANJA: " + datum);
+            let tempDatum = moment(datum).format("YYYY-MM-ddd hh:mm")
+            console.log("DATUM POSLE FORMATIRANJA: " + tempDatum);
+            return tempDatum;
         },
         getTermine2(){
             try{

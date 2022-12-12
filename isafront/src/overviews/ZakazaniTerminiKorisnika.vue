@@ -14,7 +14,7 @@
                     <p class="card-text">Preostalo vreme: {{calcTime(t)}}</p>
                 </div>
                 <div class="card-footer" style="height:150px;">
-                    <button @click="cancelTermin(t, index)">Otkazi</button>
+                    <button v-show="calcTime(t)>=24" @click="cancelTermin(t, index)">Otkazi</button>
                     <div style="margin:10px;" v-if="messages[index].successMessage" v-html="messages[index].successMessage" class="alert alert-success">
                     
                     </div>
@@ -46,7 +46,10 @@ export default {
     },
     methods:{
         datumFormat(datum){
-            return moment(datum).format("YYYY-mm-ddd hh:mm")
+            console.log("DATUM PRE FORMATIRANJA: " + datum);
+            let tempDatum = moment(datum).format("YYYY-MM-ddd hh:mm")
+            console.log("DATUM POSLE FORMATIRANJA: " + tempDatum);
+            return tempDatum;
         },
         calcTime(termin){
             console.log("Pocetak: " + termin.krajTermina)

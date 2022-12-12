@@ -45,10 +45,17 @@ export default {
                     localStorage.removeItem('token');
                     axios.defaults.headers.common['Authorization'] = undefined;
                     this.loggedIn = false;
-                    this.$router.push('/');
+                    this.$router.push("/")
                     if(localStorage.getItem('parsToken')){
                         localStorage.removeItem('parsToken');
                     }
+                }else{
+                    //kada se obrise istorija pretrage npr
+                    localStorage.removeItem('token');
+                    axios.defaults.headers.common['Authorization'] = undefined;
+                    this.loggedIn = false;
+                    this.$router.push("/")
+
                 }
             }
         }
