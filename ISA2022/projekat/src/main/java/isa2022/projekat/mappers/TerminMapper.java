@@ -40,7 +40,7 @@ public class TerminMapper {
 		tdto.setBrojMesta(t.getBrojMesta());
 		tdto.setBrSlobodnihMesta(t.getBrSlobodnihMesta());
 		tdto.setKrajTermina(t.getKrajTermina());
-		tdto.setPocetakTermina(tdto.getPocetakTermina());
+		tdto.setPocetakTermina(t.getPocetakTermina());
 		tdto.setMedCentar(medCentarMapper.toDTO(t.getMedCentar()));
 		
 		Collection<RegKorisnikDTO> tempLista = new ArrayList<RegKorisnikDTO>();
@@ -56,7 +56,7 @@ public class TerminMapper {
 		tdto.setBrojMesta(t.getBrojMesta());
 		tdto.setBrSlobodnihMesta(t.getBrSlobodnihMesta());
 		tdto.setKrajTermina(t.getKrajTermina());
-		tdto.setPocetakTermina(tdto.getPocetakTermina());
+		tdto.setPocetakTermina(t.getPocetakTermina());
 		//tdto.setMedCentar(medCentarMapper.toDTO(t.getMedCentar()));
 		
 //		Collection<RegKorisnikDTO> tempLista = new ArrayList<RegKorisnikDTO>();

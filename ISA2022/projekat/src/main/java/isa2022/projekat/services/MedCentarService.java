@@ -1,5 +1,6 @@
 package isa2022.projekat.services;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,6 +20,8 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Lock;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import isa2022.projekat.dtos.MedCentarDTO;
@@ -145,17 +148,29 @@ public class MedCentarService {
 	
 	@Lock(LockModeType.PESSIMISTIC_WRITE)
 	@Transactional
-	public TerminDTO terminReserve(Long userId, Long terminId) {
+	public ResponseEntity<TerminDTO> terminReserve(Long userId, Long terminId) {
 		// TODO Auto-generated method stub
 		Termin t = this.terminRepository.findById(terminId).orElse(null);
 		RegKorisnik kor = this.regKorisnikRepository.findById(userId).orElse(null);
 		if(t == null) {
-			return null;
+			return new ResponseEntity<TerminDTO>(HttpStatus.NO_CONTENT);
 		}
 		if(kor == null) {
-			return null;
+			return new ResponseEntity<TerminDTO>(HttpStatus.NO_CONTENT);
 		}
+		if(kor.getUpitnik() == null) {
+			System.out.println("Nije popunjen upitnik!");
+			return new ResponseEntity<TerminDTO>(HttpStatus.ALREADY_REPORTED);
+		}
+		List<MedCentar> tempMd = this.medCentarRepository.findAllByTermini_ListaPrijavljenih_Id(userId);
+		if(tempMd.size() != 0) {
+			System.out.println("Vec imate rezervisan termin u ovom centru");
+			return new ResponseEntity<TerminDTO>(HttpStatus.IM_USED);
+		}
+		
 		if(t.getBrSlobodnihMesta() > 0) {
+			
+			
 			int tmp = t.getListaPrijavljenih().size();
 			for(RegKorisnik rk : t.getListaPrijavljenih()) {
 				if(rk.getId() == userId) {
@@ -170,10 +185,11 @@ public class MedCentarService {
 			this.terminRepository.save(t);
 			this.regKorisnikRepository.save(kor);
 			
-			this.emailService.sendReservationNotificationMail(kor, t.getMedCentar(), t);
+//			this.emailService.sendReservationNotificationMail(kor, t.getMedCentar(), t);
+//			this.emailService.sendReservationNotificationMail(kor, t.getMedCentar(), t);
 		}
 		TerminDTO retVal = this.terminMapper.toDTO(t);
-		return retVal;
+		return new ResponseEntity<TerminDTO>(retVal, HttpStatus.OK);
 	}
 
 	public TerminDTO cancelTermin(Long id, Long userId) {
@@ -184,13 +200,19 @@ public class MedCentarService {
 		}
 		for(RegKorisnik rk : t.getListaPrijavljenih()) {
 			if(rk.getId().equals(userId)) {
-				t.getListaPrijavljenih().remove(rk);
-				rk.getTermini().remove(t);
-				t.setBrSlobodnihMesta(t.getBrSlobodnihMesta() + 1);
-				this.terminRepository.save(t);
-				this.regKorisnikRepository.save(rk);
-				this.emailService.sendReservationCancelationNotificationMail(rk, t.getMedCentar(), t);
-				break;
+				long hours = Duration.between(t.getPocetakTermina(), LocalDateTime.now()).toHours();
+				if(hours > 24) {
+					t.getListaPrijavljenih().remove(rk);
+					rk.getTermini().remove(t);
+					t.setBrSlobodnihMesta(t.getBrSlobodnihMesta() + 1);
+					this.terminRepository.save(t);
+					this.regKorisnikRepository.save(rk);
+					this.emailService.sendReservationCancelationNotificationMail(rk, t.getMedCentar(), t);
+					break;
+				}else {
+					return null;
+				}
+				
 			}
 		}
 		TerminDTO retVal = this.terminMapper.toDTO(t);

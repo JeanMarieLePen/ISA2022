@@ -53,8 +53,9 @@ public class MedCentarCtrl {
 	
 	@PutMapping("/terminReserve/{userId}/{terminId}")
 	public ResponseEntity<TerminDTO> terminReserve(@PathVariable(value="userId") Long userId, @PathVariable(value="terminId") Long terminId){
-		return this.medCentarService.terminReserve(userId, terminId)!= null ? new ResponseEntity<TerminDTO>(this.medCentarService.terminReserve(userId, terminId), HttpStatus.OK) : 
-			new ResponseEntity<TerminDTO>(HttpStatus.NO_CONTENT);
+//		return this.medCentarService.terminReserve(userId, terminId)!= null ? new ResponseEntity<TerminDTO>(this.medCentarService.terminReserve(userId, terminId), HttpStatus.OK) : 
+//			new ResponseEntity<TerminDTO>(HttpStatus.NO_CONTENT);
+		return this.medCentarService.terminReserve(userId, terminId);
 	}
 	
 	@PutMapping("/cancelTermin/{id}/{userId}")
