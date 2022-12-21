@@ -67,6 +67,9 @@ import VueTimePicker from 'vue2-timePicker'
 export default{
         data(){
             return{
+                messages:{
+                    successResponse:''
+                },
                 medCentar:{
                     id:'',
                     naziv:'',
@@ -134,8 +137,9 @@ export default{
         },
         methods:{
             update(){
+                console.log(this.medCentar);
                 DataService.updateMedCentarTermin(this.medCentar.id, this.medCentar).then(response => {
-                        his.messages.successResponse = `<h4>Vas izmenjeni termini!</h4>`;
+                        this.messages.successResponse = `<h4>Vas izmenjeni termini!</h4>`;
                         setTimeout(() => this.messages.successResponse = '', 5000);
                         console.log(response.data)
                         this.medCentar = response.data;
@@ -151,7 +155,7 @@ export default{
                 this.medCentar.termini.push(this.terminTemp);
             },
             izbaciTermin(index){
-                if(this.medCentar.termini[index].brojOsoba==this.medCentar.termini[index].brSlobodnihMesta && this.medCentar.termini[index].brojMesta!=1)
+                if(this.medCentar.termini[index].brojMesta==this.medCentar.termini[index].brSlobodnihMesta && this.medCentar.termini[index].brojMesta>=1)
                 this.medCentar.termini.splice(index,1);
             },
             getUserBolnica(id){
