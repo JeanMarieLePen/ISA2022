@@ -67,6 +67,9 @@ class DataService{
     getMedCentarByOsoblje(id){
         return axios.get(`${API_URL}/medcentar/getByOsoblje/${id}`);
     }
+    updateMedCentarTermin(id,medCentar){
+        return axios.put(`${API_URL}/medcentar/${id}/updateTermin`,medCentar)
+    }
 }
 
 export default new DataService();
