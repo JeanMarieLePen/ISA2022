@@ -13,6 +13,7 @@ import UserRegupdateProfile from './main-components/UserRegupdateProfile'
 import MedCentar from './overviews/MedCentar'
 import Termini from './overviews/Termini'
 import ZakazaniTerminiKorisnika from './overviews/ZakazaniTerminiKorisnika'
+import EditCelandar from './forms/EditCalendar'
 
 export default[
     {
@@ -79,6 +80,11 @@ export default[
         path:`/bookedTermini`,
         name:'ZakazaniTerminiKorisnika',
         component:ZakazaniTerminiKorisnika
-    }
+    },
+    {
+        path:`/updateTermini`,
+        name:'ZakazaniTerminiKorisnika',
+        component: EditCelandar
+    },
 ]
    

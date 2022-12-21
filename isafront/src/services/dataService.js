@@ -64,6 +64,9 @@ class DataService{
     cancelTermin(id, userId){
         return axios.put(`${API_URL}/medcentar/cancelTermin/${id}/${userId}`);
     }
+    getMedCentarByOsoblje(id){
+        return axios.get(`${API_URL}/medcentar/getByOsoblje/${id}`);
+    }
 }
 
 export default new DataService();
