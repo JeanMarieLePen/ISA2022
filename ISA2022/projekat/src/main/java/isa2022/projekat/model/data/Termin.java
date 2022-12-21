@@ -1,6 +1,7 @@
 package isa2022.projekat.model.data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
@@ -58,6 +59,16 @@ public class Termin {
 		this.krajTermina = krajTermina;
 		this.brojMesta = brojMesta;
 		this.listaPrijavljenih = listaPrijavljenih;
+		this.brSlobodnihMesta = brSlobodnihMesta;
+	}
+	public Termin( MedCentar medCentar, LocalDateTime pocetakTermina, LocalDateTime krajTermina, int brojMesta,
+			 int brSlobodnihMesta) {
+		super();
+		this.medCentar = medCentar;
+		this.pocetakTermina = pocetakTermina;
+		this.krajTermina = krajTermina;
+		this.brojMesta = brojMesta;
+		this.listaPrijavljenih = new ArrayList<RegKorisnik>();
 		this.brSlobodnihMesta = brSlobodnihMesta;
 	}
 

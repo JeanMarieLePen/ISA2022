@@ -6,33 +6,58 @@ import java.util.Collection;
 public class TerminDTO {
 
 	private Long id;
-	private MedCentarDTO medCentar;
 	private LocalDateTime pocetakTermina;
 	private LocalDateTime krajTermina;
 	private int brojMesta;
-	
-	private Collection<RegKorisnikDTO> listaPrijavljenih;
+	private Long medCentarId ;
+	private Collection<Long> prijavljeniId;
 	
 	private int brSlobodnihMesta;
+
+	public TerminDTO(Long id, LocalDateTime pocetakTermina, LocalDateTime krajTermina, int brojMesta, Long medCentarId,
+			Collection<Long> prijavljeniId, int brSlobodnihMesta) {
+		super();
+		this.id = id;
+		this.pocetakTermina = pocetakTermina;
+		this.krajTermina = krajTermina;
+		this.brojMesta = brojMesta;
+		this.medCentarId = medCentarId;
+		this.prijavljeniId = prijavljeniId;
+		this.brSlobodnihMesta = brSlobodnihMesta;
+	}
+
 
 	public TerminDTO() {
 		super();
 	}
 	
+
+	public Long getMedCentarId() {
+		return medCentarId;
+	}
+
+
+	public void setMedCentarId(Long medCentarId) {
+		this.medCentarId = medCentarId;
+	}
+
+
+	public Collection<Long> getPrijavljeniId() {
+		return prijavljeniId;
+	}
+
+
+	public void setPrijavljeniId(Collection<Long> prijavljeniId) {
+		this.prijavljeniId = prijavljeniId;
+	}
+
+
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public MedCentarDTO getMedCentar() {
-		return medCentar;
-	}
-
-	public void setMedCentar(MedCentarDTO medCentar) {
-		this.medCentar = medCentar;
 	}
 
 	public LocalDateTime getPocetakTermina() {
@@ -57,14 +82,6 @@ public class TerminDTO {
 
 	public void setBrojMesta(int brojMesta) {
 		this.brojMesta = brojMesta;
-	}
-
-	public Collection<RegKorisnikDTO> getListaPrijavljenih() {
-		return listaPrijavljenih;
-	}
-
-	public void setListaPrijavljenih(Collection<RegKorisnikDTO> listaPrijavljenih) {
-		this.listaPrijavljenih = listaPrijavljenih;
 	}
 
 	public int getBrSlobodnihMesta() {

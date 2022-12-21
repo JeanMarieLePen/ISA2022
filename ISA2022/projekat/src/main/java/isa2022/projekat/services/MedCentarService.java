@@ -26,6 +26,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import io.jsonwebtoken.lang.Collections;
 import isa2022.projekat.dtos.MedCentarDTO;
 import isa2022.projekat.dtos.PretragaDTO;
 import isa2022.projekat.dtos.TerminDTO;
@@ -33,8 +34,10 @@ import isa2022.projekat.mappers.MedCentarMapper;
 import isa2022.projekat.mappers.TerminMapper;
 import isa2022.projekat.model.data.MedCentar;
 import isa2022.projekat.model.data.Termin;
+import isa2022.projekat.model.korisnici.MedRadnik;
 import isa2022.projekat.model.korisnici.RegKorisnik;
 import isa2022.projekat.repositories.MedCentarRepository;
+import isa2022.projekat.repositories.MedRadnikRep;
 import isa2022.projekat.repositories.RegKorisnikRepository;
 import isa2022.projekat.repositories.TerminRepository;
 
@@ -54,7 +57,7 @@ public class MedCentarService {
 	private RegKorisnikRepository regKorisnikRepository;
 	@Autowired
 	private EmailService emailService;
-	
+	@Autowired private MedRadnikRep mrRep;
 	public Collection<MedCentarDTO> getAll(){
 		Collection<MedCentar> lista = this.medCentarRepository.findAll();
 		if(!lista.isEmpty()) {
@@ -236,4 +239,45 @@ public class MedCentarService {
 		TerminDTO retVal = this.terminMapper.toDTO(t);
 		return retVal;
 	}
+
+	public MedCentarDTO updateTermini(MedCentarDTO mc) {
+		MedCentar stari= medCentarRepository.getById(mc.getId());
+		List<Long> idsBaza=stari.getTermini().stream().map(x->x.getId()).collect(Collectors.toList());
+		List<Long> idsDTO=mc.getTermini().stream().map(x->x.getId()).collect(Collectors.toList());
+		for(Long id: idsBaza) {
+			if(!idsDTO.contains(id)) {
+				Termin temp= new Termin();
+				for(Termin t : stari.getTermini()) {
+					if(t.getId().equals(id)) {
+						temp=t;
+						break;
+					}
+				}
+				if(temp.getListaPrijavljenih().size()==0)
+					stari.getTermini().remove(temp);
+			}
+			
+		}
+		
+		List<Termin> novi= new ArrayList<Termin>();
+		for(TerminDTO t: mc.getTermini()) {
+			if(t.getId().equals(-1L))
+				stari.getTermini().add(new Termin(stari, t.getPocetakTermina(), t.getKrajTermina(),t.getBrojMesta(),t.getBrojMesta()));
+			else {
+				//Termin tBaza= terminRepository.getById(t.getId());
+				//novi.add(tBaza);
+			}
+		}
+		
+		stari=medCentarRepository.saveAndFlush(stari);
+
+		return medCentarMapper.toDTO(stari);
+	}
+	
+	public MedCentarDTO getByOsoblje(Long id) {
+		MedRadnik r= mrRep.getById(id);
+		return medCentarMapper.toDTO(r.getMedCentar());
+	}
+	
+	
 }
