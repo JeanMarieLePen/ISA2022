@@ -27,9 +27,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.lang.Collections;
+import isa2022.projekat.dtos.CustomRezDTO;
 import isa2022.projekat.dtos.MedCentarDTO;
 import isa2022.projekat.dtos.PretragaDTO;
 import isa2022.projekat.dtos.TerminDTO;
+import isa2022.projekat.dtos.TerminMiniDTO;
 import isa2022.projekat.mappers.MedCentarMapper;
 import isa2022.projekat.mappers.TerminMapper;
 import isa2022.projekat.model.data.MedCentar;
@@ -277,6 +279,39 @@ public class MedCentarService {
 	public MedCentarDTO getByOsoblje(Long id) {
 		MedRadnik r= mrRep.getById(id);
 		return medCentarMapper.toDTO(r.getMedCentar());
+	}
+
+	public List<MedCentarDTO> getSlobodne(TerminMiniDTO tempTermin) {
+		LocalDateTime pocetak=tempTermin.getPocetakTermina();
+		LocalDateTime kraj=tempTermin.getKrajTermina();
+		List<MedCentar> slobodni= new ArrayList<MedCentar>();
+		for(MedCentar m : medCentarRepository.findAll()) {
+			boolean slobodan=true;
+			//treba proveriti radno vreme i pauzu!
+			for(Termin t: m.getTermini()) {
+				if(t.getPocetakTermina().isAfter(kraj) || t.getKrajTermina().isBefore(pocetak)) {continue;}
+				else {
+					slobodan=false;
+					break;
+				}
+			}
+			if(slobodan==true) slobodni.add(m); 
+		}
+		
+		return slobodni.stream().map(x->medCentarMapper.toDTO(x)).collect(Collectors.toList());
+	}
+	//provere
+	public Termin customRezervacija(CustomRezDTO body) {
+		MedCentar mc= medCentarRepository.getById(body.getId());
+		RegKorisnik rk= regKorisnikRepository.getById(body.getUserId());
+		Termin t= new Termin(mc, body.getTerminTemp().getPocetakTermina(), body.getTerminTemp().getKrajTermina(), 1, 0);
+		t.getListaPrijavljenih().add(rk);
+		
+		t= terminRepository.saveAndFlush(t);
+		rk.getTermini().add(t);
+		rk=regKorisnikRepository.saveAndFlush(rk);
+		emailService.sendReservationNotificationMail(rk,mc,t);
+		return t;
 	}
 	
 	

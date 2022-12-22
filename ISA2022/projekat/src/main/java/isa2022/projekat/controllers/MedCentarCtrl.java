@@ -1,6 +1,11 @@
 package isa2022.projekat.controllers;
 
+import java.time.LocalDateTime;
+import java.time.YearMonth;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.websocket.server.PathParam;
 
@@ -16,17 +21,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import isa2022.projekat.dtos.CustomRezDTO;
 import isa2022.projekat.dtos.MedCentarDTO;
 import isa2022.projekat.dtos.PretragaDTO;
 import isa2022.projekat.dtos.TerminDTO;
+import isa2022.projekat.dtos.TerminMiniDTO;
+import isa2022.projekat.model.data.Termin;
+import isa2022.projekat.model.data.Upitnik;
+import isa2022.projekat.model.korisnici.RegKorisnik;
+import isa2022.projekat.repositories.MedRadnikRep;
+import isa2022.projekat.repositories.RegKorisnikRepository;
 import isa2022.projekat.services.MedCentarService;
 
 @RestController
 @RequestMapping("/medcentar")
 public class MedCentarCtrl {
-
-	@Autowired
-	private MedCentarService medCentarService;
+	@Autowired  private MedRadnikRep mrRep;
+	@Autowired	private MedCentarService medCentarService;
+	@Autowired private RegKorisnikRepository rRep;
 	@GetMapping("/getAll")
 	public ResponseEntity<Collection<MedCentarDTO>> getAll(){
 		return this.medCentarService.getAll().size() > 0 ? new ResponseEntity<Collection<MedCentarDTO>>(this.medCentarService.getAll(), HttpStatus.OK) 
@@ -62,5 +74,34 @@ public class MedCentarCtrl {
 	public ResponseEntity<TerminDTO> cancel(@PathVariable(value="id") Long id, @PathVariable(value="userId") Long userId){
 		return this.medCentarService.cancelTermin(id, userId) != null ? new ResponseEntity<TerminDTO>(this.medCentarService.cancelTermin(id, userId), HttpStatus.OK) :
 			new ResponseEntity<TerminDTO>(HttpStatus.NO_CONTENT);
+	}
+	@PutMapping("/{id}/updateTermin")
+	public ResponseEntity<MedCentarDTO> updateTermina(@RequestBody MedCentarDTO mc){
+		MedCentarDTO m=medCentarService.updateTermini(mc);
+		return new ResponseEntity<MedCentarDTO>(m, HttpStatus.OK);
+	}
+	@GetMapping("/getByOsoblje/{id}")
+	public ResponseEntity<MedCentarDTO> getByOsoblje(@PathVariable(value="id") Long id){
+		Long mid= mrRep.getById(id).getMedCentar().getId();
+		MedCentarDTO m=medCentarService.getByOsoblje(id);
+		return m!=null ? new ResponseEntity<MedCentarDTO>(m,HttpStatus.OK) :new ResponseEntity<MedCentarDTO>(new MedCentarDTO(),HttpStatus.NO_CONTENT);
+	}
+	@PutMapping("/terminFilter")
+	public ResponseEntity<List<MedCentarDTO>> getSlobodne(@RequestBody TerminMiniDTO tempTermin){
+		List<MedCentarDTO> slobodni=medCentarService.getSlobodne(tempTermin);
+		return slobodni.size()>0 ?   new ResponseEntity<List<MedCentarDTO>>(slobodni, HttpStatus.OK) : new ResponseEntity<List<MedCentarDTO>>(new ArrayList<MedCentarDTO>(), HttpStatus.NO_CONTENT);
+	}
+	
+	@PostMapping("/customRezervacija")
+	public ResponseEntity<Boolean> customRez(@RequestBody CustomRezDTO body){
+		RegKorisnik r= rRep.getById(body.getUserId());
+		long months=ChronoUnit.MONTHS.between(YearMonth.from(r.getPoslednjaDonacija()),
+				YearMonth.from(LocalDateTime.now())
+				);
+		if(months<6) return new ResponseEntity<Boolean>(false, HttpStatus.MULTI_STATUS);
+		
+		if(null==r.getUpitnik())return new ResponseEntity<Boolean>(false, HttpStatus.ALREADY_REPORTED);
+		Termin t= medCentarService.customRezervacija(body);
+		return t!=null ? new ResponseEntity<Boolean>(true, HttpStatus.OK) : new ResponseEntity<Boolean>(false, HttpStatus.NO_CONTENT);
 	}
 }

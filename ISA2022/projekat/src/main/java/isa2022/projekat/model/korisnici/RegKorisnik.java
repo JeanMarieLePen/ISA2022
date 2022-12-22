@@ -53,7 +53,7 @@ public class RegKorisnik extends Korisnik{
 	@JoinTable(name="regkorisnik_termini", joinColumns = @JoinColumn(name="termin_id"),
 	inverseJoinColumns = @JoinColumn(name="regkorisnik_id"))
 	private Collection<Termin> termini;
-	
+	@Nullable
 	@OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="upitnik_id", referencedColumnName = "id")
 	private Upitnik upitnik;

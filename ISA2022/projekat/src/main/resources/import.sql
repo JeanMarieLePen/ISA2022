@@ -16,10 +16,10 @@ INSERT INTO public.kategorija(naziv, poeni) VALUES ('BRONZA', 30);
 
 
 --KORISNICI
-INSERT INTO public.korisnik(adresa, datum_rodjenja, email, ime, kor_ime, lozinka, poslednja_donacija, prezime, status_naloga, tip_korisnika) VALUES ('Sindjeliceva 22 Becej', '2022-04-14', 'temp@gmail.com', 'zdravko', 'tempUsernamae', '$2a$12$.RdHV2luFjgp5vR2LQSjWeLjU3WRzUEOmaqqsL51CD/L.5sPFoxoq', '2022-11-22', 'Todovski', 0, 1);
+INSERT INTO public.korisnik(adresa, datum_rodjenja, email, ime, kor_ime, lozinka, poslednja_donacija, prezime, status_naloga, tip_korisnika) VALUES ('Sindjeliceva 22 Becej', '2022-04-14', 'temp@gmail.com', 'zdravko', 'tempUsernamae', '$2a$12$.RdHV2luFjgp5vR2LQSjWeLjU3WRzUEOmaqqsL51CD/L.5sPFoxoq', '2021-11-22', 'Todovski', 0, 1);
 INSERT INTO public.korisnik(adresa, datum_rodjenja, email, ime, kor_ime, lozinka, poslednja_donacija, prezime, status_naloga, tip_korisnika) VALUES ('Arsenija Carnojevica 1 Becej', '1996-04-14', 'arsen@gmail.com', 'Mara', 'marica', '$2a$12$.RdHV2luFjgp5vR2LQSjWeLjU3WRzUEOmaqqsL51CD/L.5sPFoxoq', '2022-11-22', 'Markovic', 1, 0);
-INSERT INTO public.korisnik(adresa, datum_rodjenja, email, ime, kor_ime, lozinka, poslednja_donacija, prezime, status_naloga, tip_korisnika) VALUES ('Nemanjina 11 Beograd', '2022-04-14', 'smajser@gmail.com', 'Slobodan', 'slobo', '$2a$12$.RdHV2luFjgp5vR2LQSjWeLjU3WRzUEOmaqqsL51CD/L.5sPFoxoq', '2022-11-22', 'Misovic', 2, 2);
-INSERT INTO public.korisnik(adresa, datum_rodjenja, email, ime, kor_ime, lozinka, poslednja_donacija, prezime, status_naloga, tip_korisnika) VALUES ('Svetozara Markovica 7 Nis', '2022-04-14', 'temp2@gmail.com', 'Milos', 'snp1389', '$2a$12$.RdHV2luFjgp5vR2LQSjWeLjU3WRzUEOmaqqsL51CD/L.5sPFoxoq', '2022-11-22', 'Markovic', 2, 1);
+INSERT INTO public.korisnik(adresa, datum_rodjenja, email, ime, kor_ime, lozinka, poslednja_donacija, prezime, status_naloga, tip_korisnika) VALUES ('Nemanjina 11 Beograd', '2022-04-14', 'smajser@gmail.com', 'Slobodan', 'slobo', '$2a$12$.RdHV2luFjgp5vR2LQSjWeLjU3WRzUEOmaqqsL51CD/L.5sPFoxoq', '2022-11-22', 'Misovic', 0, 2);
+INSERT INTO public.korisnik(adresa, datum_rodjenja, email, ime, kor_ime, lozinka, poslednja_donacija, prezime, status_naloga, tip_korisnika) VALUES ('Svetozara Markovica 7 Nis', '2022-04-14', 'temp2@gmail.com', 'Milos', 'snp1389', '$2a$12$.RdHV2luFjgp5vR2LQSjWeLjU3WRzUEOmaqqsL51CD/L.5sPFoxoq', '2022-11-22', 'Markovic', 0, 2);
 INSERT INTO public.korisnik(adresa, datum_rodjenja, email, ime, kor_ime, lozinka, poslednja_donacija, prezime, status_naloga, tip_korisnika) VALUES ('Omladinska 10 Koceljeva Srbija', '1996-05-22', 'npele96@gmail.com', 'Nikola', 'pele96', '$2a$12$.RdHV2luFjgp5vR2LQSjWeLjU3WRzUEOmaqqsL51CD/L.5sPFoxoq', '2022-01-01', 'Petkovic', 0, 1);
 INSERT INTO public.korisnik(adresa, datum_rodjenja, email, ime, kor_ime, lozinka, poslednja_donacija, prezime, status_naloga, tip_korisnika) VALUES ('Lasla Gala 28 Novi Sad Srbija', '1999-03-21', 'acpele96@gmail.com', 'Nikolina', 'niPet', '$2a$12$.RdHV2luFjgp5vR2LQSjWeLjU3WRzUEOmaqqsL51CD/L.5sPFoxoq', '2022-01-01', 'Petko', 0, 1);
 
@@ -32,9 +32,9 @@ INSERT INTO public.regkorisnik(penali, poeni, id, kategorija_id, upitnik_id) VAL
 
 
 --RADNO VREME
-INSERT INTO public.radno_vreme(kraj, kraj_pauze, pocetak, pocetak_pauze) VALUES ('2022-06-19T01:26:05', '08:00:00', '2022-06-19T01:26:05', '08:00:00');
-INSERT INTO public.radno_vreme(kraj, kraj_pauze, pocetak, pocetak_pauze) VALUES ('2022-06-19T01:26:05', '08:00:00', '2022-06-19T01:26:05', '08:00:00');
-INSERT INTO public.radno_vreme(kraj, kraj_pauze, pocetak, pocetak_pauze) VALUES ('2022-06-19T01:26:05', '08:00:00', '2022-06-19T01:26:05', '08:00:00');
+INSERT INTO public.radno_vreme(kraj, kraj_pauze, pocetak, pocetak_pauze) VALUES ('2022-06-19T09:00:00', '13:00:00', '2022-06-19T21:00:00', '14:00:00');
+INSERT INTO public.radno_vreme(kraj, kraj_pauze, pocetak, pocetak_pauze) VALUES ('2022-06-19T08:00:00', '12:00:00', '2022-06-19T16:00:00', '38:00:00');
+INSERT INTO public.radno_vreme(kraj, kraj_pauze, pocetak, pocetak_pauze) VALUES ('2022-06-19T07:00:00', '10:00:00', '2022-06-19T18:00:00', '11:00:00');
 
 --MEDICINSKI CENTRI
 INSERT INTO public.med_centar(a_grupa, ab_grupa, adresa, b_grupa, naziv, nulta_grupa, ocena, opis, radnovreme_id) VALUES (5, 10, 'Mileticeva 55, Novi Sad, Srbija', 44, 'Medicinski centar Novi Sad', 4, 2, 'Strucno i prijatno osoblje...', 1);
@@ -47,6 +47,10 @@ INSERT INTO public.med_centar(a_grupa, ab_grupa, adresa, b_grupa, naziv, nulta_g
 INSERT INTO public.med_centar(a_grupa, ab_grupa, adresa, b_grupa, naziv, nulta_grupa, ocena, opis, radnovreme_id) VALUES (12, 12, 'Zmaj Ognjena Vuka 19, Novi Sad, Srbija', 14, 'Ambulanta: Jovan Jovanovic Zmaj', 50,2.5, 'loremIpsum', 2);
 INSERT INTO public.med_centar(a_grupa, ab_grupa, adresa, b_grupa, naziv, nulta_grupa, ocena, opis, radnovreme_id) VALUES (12, 12, 'Lasla Gala 28, Novi Sad, Srbija', 14, 'dom zdravlja Grbavica', 50,2.5, 'loremIpsum', 2);
 
+--MED RADNIK
+INSERT INTO public.med_radnik(id, med_centar_id) VALUES (3, 1);
+INSERT INTO public.med_radnik(id, med_centar_id) VALUES (4, 1);
+INSERT INTO public.med_radnik(id, med_centar_id) VALUES (5, 2);
 
 --TERMINI
 INSERT INTO public.termin(br_slobodnih_mesta, broj_mesta, kraj_termina, pocetak_termina, med_centar_id)	VALUES (10, 10, '2022-11-19T10:00:00', '2022-11-19T09:00:00', 1);
