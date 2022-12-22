@@ -130,7 +130,20 @@
                                 </div>
                             </div>
                         </router-link>
-                    </div>
+                    </div>                    
+                </div>
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-0 shadow" style="height:100%">
+                        <router-link style="text-decoration: none; c" to="/customZakazi" class="nav-link" exact>
+                            <img src="../assets/termini.png" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h5 class="card-title mb-0">Zakazi Novi</h5>
+                                <div class="card-text text-black-50" style="height:100px;">
+                                    Zakazite novi termin, rucno...
+                                </div>
+                            </div>
+                        </router-link>
+                    </div>                    
                 </div>
             </div>
         </div>

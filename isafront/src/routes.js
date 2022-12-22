@@ -14,6 +14,7 @@ import MedCentar from './overviews/MedCentar'
 import Termini from './overviews/Termini'
 import ZakazaniTerminiKorisnika from './overviews/ZakazaniTerminiKorisnika'
 import EditCelandar from './forms/EditCalendar'
+import CustomZakazivanje from './forms/customZakazivanje'
 
 export default[
     {
@@ -85,6 +86,11 @@ export default[
         path:`/updateTermini`,
         name:'ZakazaniTerminiKorisnika',
         component: EditCelandar
+    },
+    {
+        path:`/customZakazi`,
+        name:'customZakazivanje',
+        component: CustomZakazivanje
     },
 ]
    
