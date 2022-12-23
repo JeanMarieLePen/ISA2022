@@ -16,22 +16,19 @@
                     <div v-if='!this.submitted'>
                     <form class="form-signin">
 
-                        <div style="margin-top:20px" v-if='messages.errorType' class="alert alert-danger" v-html="messages.errorType"></div>
+                        <!-- <div style="margin-top:20px" v-if='messages.errorType' class="alert alert-danger" v-html="messages.errorType"></div>
                         <div class="form-group">
                             <h3><label><font color="#1E90FF">Izaberite tip korisnika:</font></label></h3>
                             <br>
                             <h4>
                             <input type="radio" v-model="form.tipKorisnika" required value="REGISTROVANI_KORISNIK"> Registrovani korisnik <br><br>
-                            <!-- <input type="radio" v-model="form.tipKorisnika" required value="MEDICINSKO_OSOBLJE"> Medicinski radnik <br><br>
-                            <input type="radio" v-model="form.tipKorisnika" required value="ADMINISTRATOR_USTANOVE"> Administrator centra <br><br>
-                            <input type="radio" v-model="form.tipKorisnika" required value="ADMINISTRATOR"> Administrator -->
                             </h4> <br>
                         </div>
 
                         
                         
                         <hr>
-                        <br>
+                        <br> -->
 
                         <div v-if='messages.errorFirstName' id='testError' class="alert alert-danger" v-html="messages.errorFirstName"></div>
                         <div class="form-label-group">
@@ -64,7 +61,20 @@
                         <input class="one-forth" placeholder="Unesite adresu(ulica, mesto, broj, drzava)..." v-model='form.adresa'>
                         </div>
 
-                        
+                        <h4><label><font color="#1E90FF">Slike</font></label></h4>
+                        <div>
+                            <vueperslides fixed-height="600px">
+                                <vueperslide v-for="(slide, i) in form.slike" :key="i">
+                                    <template v-slot:content>
+                                        <img :src="slide" style="width:400px;height:600px">
+                                    </template>
+                                </vueperslide>
+                            </vueperslides>
+                        </div>
+                        <div>
+                            <input @change="uploadImage" multiple style="margin-top:20px;margin-bottom:20px;" type="file">
+                            <button @click="ponistiIzbor()">Ponisti</button>
+                        </div>
 
 
                         <div v-if='messages.errorPassword' class="alert alert-danger" v-html="messages.errorPassword"></div>
@@ -85,7 +95,7 @@
                         </div>
                         <h4><label><font color="#1E90FF">Datum rodjenja:</font></label></h4> 
                         <div style="margin-bottom:30px;">
-                            <vueDatePicker style="width:100%;" @pick="updateDatePicker">
+                            <vueDatePicker v-model="form.datumRodjenja" style="width:100%;">
 
                             </vueDatePicker>
                         </div>
@@ -116,10 +126,15 @@ import VueDatePicker from 'vue2-datepicker'
 import 'vue2-datepicker/index.css';
 import moment from 'moment'
 
+import { VueperSlides, VueperSlide } from 'vueperslides'
+import 'vueperslides/dist/vueperslides.css'
+
 export default{
     components:{
         dtpckr:DatePicker,
-        vueDatePicker:VueDatePicker
+        vueDatePicker:VueDatePicker,
+        vueperslides : VueperSlides,
+        vueperslide :VueperSlide
     },
     data(){
         return{
@@ -146,9 +161,9 @@ export default{
                 adresa: '',
                 datumRodjenja:'',
                 poslednjaDonacija:'',
-                tipKorisnika:'',
+                slike:[],
             },
-            
+            slike : [],
 
             messages:{
                 messageConfirmPassword:'',
@@ -169,6 +184,24 @@ export default{
         }
     },
     methods:{
+        ponistiIzbor(){
+            this.slike = [];
+            this.form.slike = [];
+        },
+        uploadImage(e){
+            let images = [];
+            for(let i = 0; i < e.target.files.length; i++){
+                images.push(e.target.files[i]);
+            }
+            for(let i = 0; i < images.length; i++){
+                let reader = new FileReader();
+                reader.readAsDataURL(images[i]);
+                reader.onload = (() => {
+                    this.form.slike.push(reader.result);
+                    this.slike.push(reader.result);
+                });
+            }
+        },
         updateDatePicker(val1){
             console.log("VAL1: "  + val1);
             let tempDatum = moment(val1).format('YYYY-MM-DD');
@@ -179,13 +212,7 @@ export default{
         //     let tempDatum = 
         // },
         submit(){
-            if(this.form.tipKorisnika === ''){
-                this.messages.errorType = '<h2>Niste odabrali tip korisnika!</h2>'
-                setTimeout(() => {
-                    this.messages.errorType = '';
-                }, 4000);
-            }
-            else if((this.form.ime === '')){
+            if((this.form.ime === '')){
                 this.messages.errorFirstName = '<h2>Niste uneli ime korisnika!</h2>'
                 setTimeout(() => {
                     this.messages.errorFirstName = '';
@@ -231,25 +258,27 @@ export default{
                 }, 4000);
             }
             else{
-               console.log("Kreiran objekat: " + JSON.stringify(this.form));
-               if(this.form.lozinka != this.confirmPassword){
-                    this.messages.errorPasswordMismatch = "<h2>Lozinke se ne podudaraju!</h2>";
-                    setTimeout( () => {
-                        this.messages.errorPasswordMismatch = '';
-                    }, 4000);
-               }else{
+                this.updateDatePicker(this.form.datumRodjenja);
+                console.log("Kreiran objekat: " + JSON.stringify(this.form));
+                if(this.form.lozinka != this.confirmPassword){
+                        this.messages.errorPasswordMismatch = "<h2>Lozinke se ne podudaraju!</h2>";
+                        setTimeout( () => {
+                            this.messages.errorPasswordMismatch = '';
+                        }, 4000);
+                }else{
                     dataService.register(this.form).then(response => {
                         if(response.status === 200){
                             console.log("Uspesno registrovan korisnik");
                             this.messages.successMessage = '<h2>Zahtev uspesan. Proverite mejl za potvrdu naloga.</h2>';
 
                             setTimeout(() => {
-                                this.$router.push("/home");
                                 this.messages.successMessage = '';
+                                this.$router.push("/");
+                                
                             }, 4000)
                         }
                     })
-               }
+                }
             }
         }
     },

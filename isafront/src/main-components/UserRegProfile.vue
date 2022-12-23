@@ -54,6 +54,18 @@
                         <h5 class="header5">Loyalty kategorija</h5>
                        <h4>{{profile.kategorija.naziv}}</h4>
                     </li>
+                    <li class="list-group-item">
+                        <h5 class="header5">Slike</h5>
+                        <div>
+                            <vueperslides  fade fixed-height="600px">
+                                <vueperslide v-for="(slide, i) in profile.slike" :key="i">
+                                    <template v-slot:content>
+                                        <img style="width:100%; height:600px;" :src="slide">
+                                    </template>
+                                </vueperslide>
+                            </vueperslides>
+                        </div>
+                    </li>
                     
                 </ul>
 
@@ -72,7 +84,13 @@
 <script>
 
 import DataService from '../services/dataService'
+import { VueperSlides, VueperSlide } from 'vueperslides'
+import 'vueperslides/dist/vueperslides.css'
     export default{
+        components:{
+            vueperslides : VueperSlides,
+            vueperslide :VueperSlide
+        },
         data(){
             return{
                 profile:{
@@ -108,8 +126,16 @@ import DataService from '../services/dataService'
         methods:{
             getUserProfileData(id){
             DataService.getUser(id).then(response => {
-                console.log("USER PROFILE: " + JSON.stringify(response.data));
-                this.profile = response.data;
+                    console.log("USER PROFILE: " + JSON.stringify(response.data));
+                    this.profile = response.data;
+                    console.log("BROJ SLIKA: " + this.profile.slike.length);
+                    let tempSlike = [];
+                    for(let i = 0; i < this.profile.slike.length; i++){
+                        console.log("AAA")
+                        tempSlike.push('data:image/png;base64,' + this.profile.slike[i]);
+                    }
+                    this.profile.slike = tempSlike;
+                    console.log("SLIKA POSLE FORMATIRANJA: " + JSON.stringify(this.profile.slike[0]))
                 })
             },
             updateUser(id){ 

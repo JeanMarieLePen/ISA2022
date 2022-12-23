@@ -5,7 +5,7 @@
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav mr-auto">
                     <li v-show="!loggedIn" class="nav-item active">
-                        <router-link to='/' class="nav-link" exact>Home</router-link>
+                        <router-link to='/home' class="nav-link" exact>Home</router-link>
                     </li>
                     <li v-show="loggedIn" class="nav-item active">
                         <router-link class="nav-link" to='/home' exact>Home</router-link>
