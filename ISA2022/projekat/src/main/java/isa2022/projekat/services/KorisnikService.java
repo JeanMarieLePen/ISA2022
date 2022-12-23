@@ -12,7 +12,10 @@ import org.springframework.stereotype.Service;
 import isa2022.projekat.dtos.RegisterDTO;
 import isa2022.projekat.mappers.RegisterMapper;
 import isa2022.projekat.model.korisnici.Korisnik;
+import isa2022.projekat.model.korisnici.RegKorisnik;
 import isa2022.projekat.model.korisnici.StatusNaloga;
+import isa2022.projekat.model.korisnici.TipKorisnika;
+import isa2022.projekat.repositories.KategorijaRepository;
 import isa2022.projekat.repositories.KorisnikRepository;
 
 @Service
@@ -24,15 +27,20 @@ public class KorisnikService {
 	private RegisterMapper registerMapper;
 	@Autowired
 	private EmailService emailService;
+	@Autowired
+	private KategorijaRepository katRep;
 	
 	public RegisterDTO registerNewUser(RegisterDTO user){
 		Korisnik k = this.korisnikRepository.findByEmail(user.getEmail());
 		if(k != null) {
 			return null;
 		}
-		Korisnik newUser = this.registerMapper.fromDTO(user);
+//		Korisnik newUser = this.registerMapper.fromDTO(user);
+		RegKorisnik newUser = this.registerMapper.fromDTO(user);
 		if(newUser != null) {
 			BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
+			newUser.setTipKorisnika(TipKorisnika.REGISTROVANI_KORISNIK);
+			newUser.setKategorija(this.katRep.findByNaziv("BRONZA"));
 			newUser.setStatusNaloga(StatusNaloga.NA_CEKANJU);
 			newUser.setLozinka(new String(enc.encode(user.getLozinka())));
 			this.korisnikRepository.saveAndFlush(newUser);

@@ -33,7 +33,7 @@ INSERT INTO public.regkorisnik(penali, poeni, id, kategorija_id, upitnik_id) VAL
 
 --RADNO VREME
 INSERT INTO public.radno_vreme(kraj, kraj_pauze, pocetak, pocetak_pauze) VALUES ('2022-06-19T09:00:00', '13:00:00', '2022-06-19T21:00:00', '14:00:00');
-INSERT INTO public.radno_vreme(kraj, kraj_pauze, pocetak, pocetak_pauze) VALUES ('2022-06-19T08:00:00', '12:00:00', '2022-06-19T16:00:00', '38:00:00');
+INSERT INTO public.radno_vreme(kraj, kraj_pauze, pocetak, pocetak_pauze) VALUES ('2022-06-19T08:00:00', '12:00:00', '2022-06-19T16:00:00', '18:00:00');
 INSERT INTO public.radno_vreme(kraj, kraj_pauze, pocetak, pocetak_pauze) VALUES ('2022-06-19T07:00:00', '10:00:00', '2022-06-19T18:00:00', '11:00:00');
 
 --MEDICINSKI CENTRI

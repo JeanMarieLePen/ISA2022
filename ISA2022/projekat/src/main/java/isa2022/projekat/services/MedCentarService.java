@@ -179,8 +179,14 @@ public class MedCentarService {
 		}
 		
 		LocalDate now = LocalDate.now();
-		LocalDate lastDonation = kor.getPoslednjaDonacija();
-		long days = ChronoUnit.DAYS.between(lastDonation, now);
+		LocalDate lastDonation = null;
+		long days = 0;
+		if(kor.getPoslednjaDonacija() == null) {
+			days = 1000;
+		}else {
+			lastDonation = kor.getPoslednjaDonacija();
+			days = ChronoUnit.DAYS.between(lastDonation, now);
+		}
 		if(days<=(30*6)) {
 			System.out.println("Vec ste donirali krv u prethodnih 6 meseci.");
 			return new ResponseEntity<TerminDTO>(HttpStatus.MULTI_STATUS);

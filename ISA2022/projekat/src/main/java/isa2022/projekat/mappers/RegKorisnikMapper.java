@@ -1,6 +1,7 @@
 package isa2022.projekat.mappers;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,6 +86,13 @@ public class RegKorisnikMapper {
 		for(ZahtevRezervacijaTermina z : rk.getZahtevRezervacijaTermina()) {
 			tempLista.add(zrtMapper.toDTO(z));
 		}
+		
+		Collection<String> tempSlike = new ArrayList<String>();
+		for(byte[] s : rk.getSlike()) {
+			String tempSlika = Base64.getEncoder().encodeToString(s);
+			tempSlike.add(tempSlika);
+		}
+		rdto.setSlike(tempSlike);
 		
 		rdto.setZahtevRezervacijaTermina(tempLista);
 		

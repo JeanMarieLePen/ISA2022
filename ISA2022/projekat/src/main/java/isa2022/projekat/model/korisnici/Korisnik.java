@@ -1,9 +1,13 @@
 package isa2022.projekat.model.korisnici;
 
 import java.time.LocalDate;
+import java.util.Base64;
+import java.util.Collection;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,8 +45,13 @@ public class Korisnik {
 	private LocalDate datumRodjenja;
 	private LocalDate poslednjaDonacija;
 	
+	@Enumerated
 	private StatusNaloga statusNaloga;
+	@Enumerated
 	private TipKorisnika tipKorisnika;
+	
+	@ElementCollection
+	private Collection<byte[]> slike;
 	
 	//KONSTRUKTORI
 	
@@ -50,11 +59,10 @@ public class Korisnik {
 	public Korisnik() {
 		super();
 	}
-	public Korisnik(Long id, String lozinka, String korIme, String email, String ime, String prezime, String adresa,
-			LocalDate datumRodjenja, LocalDate poslednjaDonacija, StatusNaloga statusNaloga,
-			TipKorisnika tipKorisnika) {
+	public Korisnik(String lozinka, String korIme, String email, String ime, String prezime, String adresa,
+			LocalDate datumRodjenja, LocalDate poslednjaDonacija, StatusNaloga statusNaloga, TipKorisnika tipKorisnika,
+			Collection<byte[]> slike) {
 		super();
-		this.id = id;
 		this.lozinka = lozinka;
 		this.korIme = korIme;
 		this.email = email;
@@ -65,9 +73,14 @@ public class Korisnik {
 		this.poslednjaDonacija = poslednjaDonacija;
 		this.statusNaloga = statusNaloga;
 		this.tipKorisnika = tipKorisnika;
+		this.slike = slike;
 	}
-	
-	//GETERI I SETERI
+	public Collection<byte[]> getSlike() {
+		return slike;
+	}
+	public void setSlike(Collection<byte[]> slike) {
+		this.slike = slike;
+	}
 	public StatusNaloga getStatusNaloga() {
 		return statusNaloga;
 	}

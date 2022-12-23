@@ -1,6 +1,7 @@
 package isa2022.projekat.dtos;
 
 import java.time.LocalDate;
+import java.util.Collection;
 
 import isa2022.projekat.model.korisnici.StatusNaloga;
 import isa2022.projekat.model.korisnici.TipKorisnika;
@@ -18,8 +19,16 @@ public class KorisnikDTO {
 	
 	private StatusNaloga statusNaloga;
 	private TipKorisnika tipKorisnika;
+	private Collection<String> slike;
+	
 	public KorisnikDTO() {
 		super();
+	}
+	public Collection<String> getSlike() {
+		return slike;
+	}
+	public void setSlike(Collection<String> slike) {
+		this.slike = slike;
 	}
 	public String getLozinka() {
 		return lozinka;
