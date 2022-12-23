@@ -103,8 +103,10 @@ export default {
         },
         getTermine(){
             dataService.getTermineByKorisnik(this.userId).then(response => {
-                console.log("Dobavljena lista termina");
+                
                 this.listaTermina = response.data;
+                console.log("userId:"+this.userId)
+                console.log("Dobavljena lista termina, size="+this.listaTermina.length);
                 this.messages = [];
                 for(let i = 0; i < this.listaTermina.length; i++){
                     let tempObjekat = new Object();

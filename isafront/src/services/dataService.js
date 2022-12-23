@@ -64,6 +64,18 @@ class DataService{
     cancelTermin(id, userId){
         return axios.put(`${API_URL}/medcentar/cancelTermin/${id}/${userId}`);
     }
+    getMedCentarByOsoblje(id){
+        return axios.get(`${API_URL}/medcentar/getByOsoblje/${id}`);
+    }
+    updateMedCentarTermin(id,medCentar){
+        return axios.put(`${API_URL}/medcentar/${id}/updateTermin`,medCentar);
+    }
+    getSlobodne(tempTermin){
+        return axios.put(`${API_URL}/medcentar/terminFilter`,tempTermin);
+    }
+    customRezervisi(body){
+        return axios.post(`${API_URL}/medcentar/customRezervacija`,body)
+    }
 }
 
 export default new DataService();

@@ -160,26 +160,27 @@
                                 </div>
                             </div>
                         </router-link>
-                    </div>
+                    </div>                    
+                </div>
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-0 shadow" style="height:100%">
+                        <router-link style="text-decoration: none; c" to="/customZakazi" class="nav-link" exact>
+                            <img src="../assets/termini.png" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h5 class="card-title mb-0">Zakazi Novi</h5>
+                                <div class="card-text text-black-50" style="height:100px;">
+                                    Zakazite novi termin, rucno...
+                                </div>
+                            </div>
+                        </router-link>
+                    </div>                    
                 </div>
             </div>
         </div>
 
         <div v-show="role === 'MEDICINSKO_OSOBLJE'">
             <div class="row">
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-0 shadow" style="height:100%">
-                        <router-link style="text-decoration: none; c" to="/search" class="nav-link" exact>
-                            <img src="../assets/search-icon.png" class="card-img-top" alt="...">
-                            <div class="card-body text-center">
-                                <h5 class="card-title mb-0">Pretraga ponude</h5>
-                                <div class="card-text text-black-50" style="height:100px;">
-                                    Pretrazite detaljno ponudu svih proizvoda u ponudi...
-                                </div>
-                            </div>
-                        </router-link>
-                    </div>
-                </div>
+                
                 <div class="col-xl-3 col-md-6 mb-4">
                     <div class="card border-0 shadow" style="height:100%">
                         <router-link style="text-decoration: none; c" to="/profile" class="nav-link" exact>
@@ -195,25 +196,12 @@
                 </div>
                 <div class="col-xl-3 col-md-6 mb-4">
                     <div class="card border-0 shadow" style="height:100%">
-                        <router-link style="text-decoration: none; c" to="/upitnik" class="nav-link" exact>
-                            <img src="../assets/form.png" class="card-img-top" alt="...">
-                            <div class="card-body text-center">
-                                <h5 class="card-title mb-0">Upitnik</h5>
-                                <div class="card-text text-black-50" style="height:100px;">
-                                    Popunjavanje detalja upitnika o korisniku...
-                                </div>
-                            </div>
-                        </router-link>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-0 shadow" style="height:100%">
-                        <router-link style="text-decoration: none; c" to="/hospitalsOverview" class="nav-link" exact>
+                        <router-link style="text-decoration: none; c" to="/updateTermini" class="nav-link" exact>
                             <img src="../assets/hospitals.png" class="card-img-top" alt="...">
                             <div class="card-body text-center">
-                                <h5 class="card-title mb-0">Pregled centara</h5>
+                                <h5 class="card-title mb-0">Update bolnica</h5>
                                 <div class="card-text text-black-50" style="height:100px;">
-                                    Pregledajte podatke o svim centrima za donaciju krvi...
+                                    Izmenite termine davanja krvi u vasoj bolnici
                                 </div>
                             </div>
                         </router-link>
