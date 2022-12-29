@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Version;
 
 import com.sun.istack.NotNull;
 
@@ -34,6 +35,12 @@ public class Korisnik {
 	//odnosno dobija se da se podacima uvezenim iz import.sql fajla generise ID 
     @Column(columnDefinition = "bigserial", name = "id", updatable = false, unique=true)
 	private Long id;
+	
+	@Version
+	@Column(columnDefinition = "integer DEFAULT 0", nullable = false)
+	//SVA POLJA MORAJU BITI INICIJALIZOVANA NA 0 KAKO BI SE MOGAO IZVRSITI ROLLBACK VERZIJE UKOLIKO JE POTREBAN
+	//U suprotnom greska: Unable to perform beforeTransactionCompletion callback: null;
+	private Integer version;
 	
 	private String lozinka;
 	private String korIme;
@@ -74,6 +81,12 @@ public class Korisnik {
 		this.statusNaloga = statusNaloga;
 		this.tipKorisnika = tipKorisnika;
 		this.slike = slike;
+	}
+	public Integer getVersion() {
+		return version;
+	}
+	public void setVersion(Integer version) {
+		this.version = version;
 	}
 	public Collection<byte[]> getSlike() {
 		return slike;

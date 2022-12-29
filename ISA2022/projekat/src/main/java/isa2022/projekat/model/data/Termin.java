@@ -16,6 +16,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Version;
 
 import org.springframework.lang.Nullable;
 
@@ -30,6 +31,12 @@ public class Termin {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(columnDefinition = "bigserial", name = "id", updatable = false, unique=true)
 	private Long id;
+	
+	@Version
+	@Column(columnDefinition = "integer DEFAULT 0", nullable = false)
+	//SVA POLJA MORAJU BITI INICIJALIZOVANA NA 0 KAKO BI SE MOGAO IZVRSITI ROLLBACK VERZIJE UKOLIKO JE POTREBAN
+	//U suprotnom greska: Unable to perform beforeTransactionCompletion callback: null;
+	private Integer version;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	private MedCentar medCentar;
@@ -72,6 +79,12 @@ public class Termin {
 		this.brSlobodnihMesta = brSlobodnihMesta;
 	}
 
+	public Integer getVersion() {
+		return version;
+	}
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
 	public MedCentar getMedCentar() {
 		return medCentar;
 	}

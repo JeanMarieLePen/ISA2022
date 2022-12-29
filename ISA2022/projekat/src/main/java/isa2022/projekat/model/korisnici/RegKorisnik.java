@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import org.springframework.lang.Nullable;
 
@@ -40,6 +41,8 @@ public class RegKorisnik extends Korisnik{
 	private int penali;
 	@OneToMany(mappedBy="korisnik", cascade=CascadeType.ALL, orphanRemoval = true)
 	private Collection<ZahtevRezervacijaTermina> zahtevRezervacijaTermina;
+	
+	
 	
 	
 //	//JEDAN KORISNIK, JEDAN TERMIN
@@ -82,8 +85,7 @@ public class RegKorisnik extends Korisnik{
 		return termini;
 	}
 
-
-
+	
 	public void setTermini(Collection<Termin> termini) {
 		this.termini = termini;
 	}

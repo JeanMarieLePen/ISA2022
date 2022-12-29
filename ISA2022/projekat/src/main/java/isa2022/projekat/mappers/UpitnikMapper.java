@@ -21,7 +21,7 @@ public class UpitnikMapper {
 		ret.setIme(u.getIme());
 		ret.setImeRoditelja(u.getImeRoditelja());
 		ret.setJmbg(u.getJmbg());
-		
+		ret.setVersion(u.getVersion());
 //		ret.setKorisnik(regKorisnikMapper.fromDTO(u.getKorisnik()));
 		ret.setKucniTelefon(u.getKucniTelefon());
 		ret.setMesto(u.getMesto());
@@ -44,7 +44,7 @@ public class UpitnikMapper {
 		ret.setIme(u.getIme());
 		ret.setImeRoditelja(u.getImeRoditelja());
 		ret.setJmbg(u.getJmbg());
-		
+		ret.setVersion(u.getVersion());
 //		ret.setKorisnik(regKorisnikMapper.toDTO(u.getKorisnik()));
 		ret.setKucniTelefon(u.getKucniTelefon());
 		ret.setMesto(u.getMesto());

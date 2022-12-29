@@ -57,8 +57,8 @@ public class MedCentarService {
 	private TerminRepository terminRepository;
 	@Autowired
 	private RegKorisnikRepository regKorisnikRepository;
-	@Autowired
-	private EmailService emailService;
+//	@Autowired
+//	private EmailService emailService;
 	@Autowired private MedRadnikRep mrRep;
 	public Collection<MedCentarDTO> getAll(){
 		Collection<MedCentar> lista = this.medCentarRepository.findAll();
@@ -152,12 +152,12 @@ public class MedCentarService {
 		return retList;
 	}
 
-	
-	@Lock(LockModeType.PESSIMISTIC_WRITE)
-	@Transactional
-	public ResponseEntity<TerminDTO> terminReserve(Long userId, Long terminId) {
+	//obavezna anotacija @Transactional
+	@Transactional 
+	public ResponseEntity<TerminDTO> terminReserve(Long userId, Long terminId) throws Exception {
 		// TODO Auto-generated method stub
 		Termin t = this.terminRepository.findById(terminId).orElse(null);
+//		this.entityManager.lock(t, LockModeType.OPTIMISTIC);
 		RegKorisnik kor = this.regKorisnikRepository.findById(userId).orElse(null);
 		if(t == null) {
 			return new ResponseEntity<TerminDTO>(HttpStatus.NO_CONTENT);
@@ -210,17 +210,18 @@ public class MedCentarService {
 			t.getListaPrijavljenih().add(kor);
 			t.setBrSlobodnihMesta(t.getBrojMesta() - t.getListaPrijavljenih().size());
 			kor.getTermini().add(t);
-			
+			Thread.sleep(10000);
 			this.terminRepository.save(t);
 			this.regKorisnikRepository.save(kor);
 			
-			this.emailService.sendReservationNotificationMail(kor, t.getMedCentar(), t);
+//			this.emailService.sendReservationNotificationMail(kor, t.getMedCentar(), t);
 //			this.emailService.sendReservationNotificationMail(kor, t.getMedCentar(), t);
 		}
 		TerminDTO retVal = this.terminMapper.toDTO(t);
 		return new ResponseEntity<TerminDTO>(retVal, HttpStatus.OK);
 	}
 
+	@Transactional
 	public TerminDTO cancelTermin(Long id, Long userId) {
 		// TODO Auto-generated method stub
 		Termin t = this.terminRepository.findById(id).orElse(null);
@@ -236,7 +237,7 @@ public class MedCentarService {
 					t.setBrSlobodnihMesta(t.getBrSlobodnihMesta() + 1);
 					this.terminRepository.save(t);
 					this.regKorisnikRepository.save(rk);
-					this.emailService.sendReservationCancelationNotificationMail(rk, t.getMedCentar(), t);
+//					this.emailService.sendReservationCancelationNotificationMail(rk, t.getMedCentar(), t);
 					break;
 				}else {
 					return null;
@@ -316,7 +317,7 @@ public class MedCentarService {
 		t= terminRepository.saveAndFlush(t);
 		rk.getTermini().add(t);
 		rk=regKorisnikRepository.saveAndFlush(rk);
-		emailService.sendReservationNotificationMail(rk,mc,t);
+//		emailService.sendReservationNotificationMail(rk,mc,t);
 		return t;
 	}
 	

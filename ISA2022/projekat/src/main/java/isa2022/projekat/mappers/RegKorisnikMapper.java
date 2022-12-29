@@ -29,7 +29,7 @@ public class RegKorisnikMapper {
 		rk.setDatumRodjenja(rdto.getDatumRodjenja());
 		rk.setEmail(rdto.getEmail());
 		rk.setIme(rdto.getIme());
-		
+		rk.setVersion(rdto.getVersion());
 		rk.setKategorija(kategorijaMapper.fromDTO(rdto.getKategorija()));
 		rk.setKorIme(rdto.getKorIme());
 		rk.setLozinka(rdto.getLozinka());
@@ -65,7 +65,7 @@ public class RegKorisnikMapper {
 		rdto.setDatumRodjenja(rk.getDatumRodjenja());
 		rdto.setEmail(rk.getEmail());
 		rdto.setIme(rk.getIme());
-		
+		rdto.setVersion(rk.getVersion());
 		rdto.setKategorija(kategorijaMapper.toDTO(rk.getKategorija()));
 		rdto.setKorIme(rk.getKorIme());
 		rdto.setLozinka(rk.getLozinka());

@@ -7,6 +7,7 @@ import isa2022.projekat.model.korisnici.StatusNaloga;
 import isa2022.projekat.model.korisnici.TipKorisnika;
 
 public class KorisnikDTO {
+	private Integer version;
 	private String lozinka;
 	private String korIme;
 	private String email;
@@ -23,6 +24,12 @@ public class KorisnikDTO {
 	
 	public KorisnikDTO() {
 		super();
+	}
+	public Integer getVersion() {
+		return version;
+	}
+	public void setVersion(Integer version) {
+		this.version = version;
 	}
 	public Collection<String> getSlike() {
 		return slike;

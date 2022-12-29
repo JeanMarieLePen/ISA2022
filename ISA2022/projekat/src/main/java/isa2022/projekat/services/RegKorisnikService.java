@@ -6,6 +6,10 @@ import java.util.Collections;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -41,7 +45,11 @@ public class RegKorisnikService {
 	private TerminRepository terminRepository;
 	@Autowired 
 	private TerminMapper terminMapper;
-
+	@Autowired
+	private EntityManager entityManager;
+	
+	//obavezna anotacija @Transactional
+	@Transactional 
 	public UpitnikDTO submitUpitnik(UpitnikDTO u, Long id) {
 		RegKorisnik rk = this.regKorisnikRepository.findById(id).orElse(null);
 		if (rk == null) {
@@ -55,14 +63,21 @@ public class RegKorisnikService {
 		upitnikRepository.save(temp);
 		return u;
 	}
-	public UpitnikDTO editUpitnik(UpitnikDTO u, Long id) {
+	
+	//obavezna anotacija @Transactional
+	@Transactional 
+	public UpitnikDTO editUpitnik(UpitnikDTO u, Long id) throws Exception  {
 		
+//		RegKorisnik rk = entityManager.find(RegKorisnik.class, id);
+//		entityManager.lock(rk, LockModeType.OPTIMISTIC);
 		RegKorisnik rk = this.regKorisnikRepository.findById(id).orElse(null);
 		if(rk == null) {
 			return null;
 		}
 		if(rk.getUpitnik() != null) {
-			Upitnik temp = rk.getUpitnik();
+			Upitnik temp = upitnikRepository.findById(rk.getUpitnik().getId()).orElse(null);
+//			Upitnik temp = entityManager.find(Upitnik.class, rk.getUpitnik().getId());
+//			entityManager.lock(temp, LockModeType.OPTIMISTIC);
 			temp.setAdresa(u.getAdresa());
 			temp.setBrojPrethodnihDonacija(u.getBrojPrethodnihDonacija());
 			temp.setDatumRodjenja(u.getDatumRodjenja());
@@ -78,7 +93,8 @@ public class RegKorisnikService {
 			temp.setPoslovniTelefon(u.getPoslovniTelefon());
 			temp.setPrezime(u.getPrezime());
 			temp.setZanimanje(u.getZanimanje());
-					
+			System.out.println("VERZIJA JE SAD: " + temp.getVersion());
+			Thread.sleep(10000);
 			upitnikRepository.saveAndFlush(temp);
 			return u;
 		}

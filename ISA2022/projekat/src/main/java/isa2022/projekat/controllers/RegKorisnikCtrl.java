@@ -46,7 +46,7 @@ public class RegKorisnikCtrl {
 	}
 	@PreAuthorize("hasAuthority('REGISTROVANI_KORISNIK')")
 	@PutMapping("/editUpitnik/{id}")
-	public ResponseEntity<UpitnikDTO> editUpitnik(@PathVariable(value="id")Long id, @RequestBody UpitnikDTO u){
+	public ResponseEntity<UpitnikDTO> editUpitnik(@PathVariable(value="id")Long id, @RequestBody UpitnikDTO u) throws Exception{
 		UpitnikDTO retVal = regKorisnikService.editUpitnik(u, id);
 		return  (retVal != null) ? new ResponseEntity<UpitnikDTO>(retVal, HttpStatus.OK) : new ResponseEntity<UpitnikDTO>(HttpStatus.ALREADY_REPORTED);	 
 	}

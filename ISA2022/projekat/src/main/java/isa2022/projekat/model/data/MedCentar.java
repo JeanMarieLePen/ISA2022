@@ -15,6 +15,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Version;
 
 import isa2022.projekat.model.korisnici.MedRadnik;
 
@@ -26,7 +27,11 @@ public class MedCentar {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(columnDefinition = "bigserial", name = "id", updatable = false, unique=true)
 	private Long id;
-	
+	@Version
+	@Column(columnDefinition = "integer DEFAULT 0", nullable = false)
+	//SVA POLJA MORAJU BITI INICIJALIZOVANA NA 0 KAKO BI SE MOGAO IZVRSITI ROLLBACK VERZIJE UKOLIKO JE POTREBAN
+	//U suprotnom greska: Unable to perform beforeTransactionCompletion callback: null;
+	private Integer version;
 	private String naziv;
 	private String adresa;
 	private String opis;
@@ -65,6 +70,16 @@ public class MedCentar {
 		this.radnoVreme = radnoVreme;
 		this.termini = termini;
 		this.listaZaposlenih = listaZaposlenih;
+	}
+
+
+	public Integer getVersion() {
+		return version;
+	}
+
+
+	public void setVersion(Integer version) {
+		this.version = version;
 	}
 
 

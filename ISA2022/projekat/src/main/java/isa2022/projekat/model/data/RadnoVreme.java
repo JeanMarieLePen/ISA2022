@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Version;
 
 @Entity
 public class RadnoVreme {
@@ -16,6 +17,11 @@ public class RadnoVreme {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(columnDefinition = "bigserial", name = "id", updatable = false, unique=true)
 	private long id;
+	@Version
+	@Column(columnDefinition = "integer DEFAULT 0", nullable = false)
+	//SVA POLJA MORAJU BITI INICIJALIZOVANA NA 0 KAKO BI SE MOGAO IZVRSITI ROLLBACK VERZIJE UKOLIKO JE POTREBAN
+	//U suprotnom greska: Unable to perform beforeTransactionCompletion callback: null;
+	private Integer version;
 	private LocalDateTime pocetak;
 	private LocalDateTime kraj;
 	
@@ -29,6 +35,12 @@ public class RadnoVreme {
 		this.kraj = kraj;
 		this.pocetakPauze = pocetakPauze;
 		this.krajPauze = krajPauze;
+	}
+	public Integer getVersion() {
+		return version;
+	}
+	public void setVersion(Integer version) {
+		this.version = version;
 	}
 	public RadnoVreme() {
 		super();

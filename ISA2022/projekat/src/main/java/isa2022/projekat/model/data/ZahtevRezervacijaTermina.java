@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Version;
 
 import isa2022.projekat.model.korisnici.RegKorisnik;
 
@@ -20,7 +21,11 @@ public class ZahtevRezervacijaTermina {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
 	private Long id;
-	
+	@Version
+	@Column(columnDefinition = "integer DEFAULT 0", nullable = false)
+	//SVA POLJA MORAJU BITI INICIJALIZOVANA NA 0 KAKO BI SE MOGAO IZVRSITI ROLLBACK VERZIJE UKOLIKO JE POTREBAN
+	//U suprotnom greska: Unable to perform beforeTransactionCompletion callback: null;
+	private Integer version;
 	@ManyToOne(fetch=FetchType.LAZY)
 	private RegKorisnik korisnik;
 	
@@ -42,6 +47,14 @@ public class ZahtevRezervacijaTermina {
 	this.qrCode = qrCode;
 	this.status = status;
 }
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
 
 	public Long getId() {
 		return id;

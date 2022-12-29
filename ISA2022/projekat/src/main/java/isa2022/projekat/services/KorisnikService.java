@@ -25,8 +25,8 @@ public class KorisnikService {
 	private KorisnikRepository korisnikRepository;
 	@Autowired 
 	private RegisterMapper registerMapper;
-	@Autowired
-	private EmailService emailService;
+//	@Autowired
+//	private EmailService emailService;
 	@Autowired
 	private KategorijaRepository katRep;
 	
@@ -44,7 +44,7 @@ public class KorisnikService {
 			newUser.setStatusNaloga(StatusNaloga.NA_CEKANJU);
 			newUser.setLozinka(new String(enc.encode(user.getLozinka())));
 			this.korisnikRepository.saveAndFlush(newUser);
-			this.emailService.sendActivationEmail(newUser);
+//			this.emailService.sendActivationEmail(newUser);
 			return user;
 		}
 		return null;
