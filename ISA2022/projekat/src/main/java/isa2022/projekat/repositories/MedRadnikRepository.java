@@ -4,7 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import isa2022.projekat.model.korisnici.MedRadnik;
 
-public interface MedRadnikRep extends JpaRepository<MedRadnik, Long>{
-	
-}
+public interface MedRadnikRepository extends JpaRepository<MedRadnik, Long> {
 
+}

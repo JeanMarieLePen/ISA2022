@@ -50,6 +50,11 @@ public class MedCentar {
 	private Collection<MedRadnik> listaZaposlenih;
 	
 	
+	@OneToMany(mappedBy="medCentarZa", cascade=CascadeType.ALL, orphanRemoval = true)
+	private Collection<Porudzbina> listaPorudzbina;
+	@OneToMany(mappedBy="medCentarOd", cascade=CascadeType.ALL, orphanRemoval = true)
+	private Collection<Porudzbina> listaNarucilaca;
+	
 	public MedCentar() {
 		super();
 	}
@@ -70,6 +75,26 @@ public class MedCentar {
 		this.radnoVreme = radnoVreme;
 		this.termini = termini;
 		this.listaZaposlenih = listaZaposlenih;
+	}
+
+
+	public Collection<Porudzbina> getListaPorudzbina() {
+		return listaPorudzbina;
+	}
+
+
+	public void setListaPorudzbina(Collection<Porudzbina> listaPorudzbina) {
+		this.listaPorudzbina = listaPorudzbina;
+	}
+
+
+	public Collection<Porudzbina> getListaNarucilaca() {
+		return listaNarucilaca;
+	}
+
+
+	public void setListaNarucilaca(Collection<Porudzbina> listaNarucilaca) {
+		this.listaNarucilaca = listaNarucilaca;
 	}
 
 

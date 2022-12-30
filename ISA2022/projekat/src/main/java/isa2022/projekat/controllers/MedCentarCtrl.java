@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import isa2022.projekat.dtos.CustomRezDTO;
 import isa2022.projekat.dtos.MedCentarDTO;
+import isa2022.projekat.dtos.PorudzbinaDTO;
 import isa2022.projekat.dtos.PretragaDTO;
 import isa2022.projekat.dtos.TerminDTO;
 import isa2022.projekat.dtos.TerminMiniDTO;
@@ -103,5 +104,52 @@ public class MedCentarCtrl {
 		if(null==r.getUpitnik())return new ResponseEntity<Boolean>(false, HttpStatus.ALREADY_REPORTED);
 		Termin t= medCentarService.customRezervacija(body);
 		return t!=null ? new ResponseEntity<Boolean>(true, HttpStatus.OK) : new ResponseEntity<Boolean>(false, HttpStatus.NO_CONTENT);
+	}
+	
+	@PostMapping("/makeNewOrder/{idOd}/{idDo}")
+	public ResponseEntity<PorudzbinaDTO> makeNewOrder(@PathVariable(value="idOd") Long idOd, @PathVariable(value="idDo") Long idDo, @RequestBody PorudzbinaDTO porudzbina){
+		PorudzbinaDTO dto = this.medCentarService.makeNewOrder(idOd, idDo, porudzbina);
+		if(dto==null) {
+			return new ResponseEntity<PorudzbinaDTO>(HttpStatus.ALREADY_REPORTED);
+		}else {
+			return new ResponseEntity<PorudzbinaDTO>(dto, HttpStatus.ACCEPTED);
+		}
+	}
+	
+	@GetMapping("/getMedCentarByWorkerId/{id}")
+	public ResponseEntity<MedCentarDTO> getMedCentarByWorkerId(@PathVariable(value="id") Long id){
+		MedCentarDTO dto = this.medCentarService.findMedCentarByWorkerId(id);
+		if(dto == null) {
+			return new ResponseEntity<MedCentarDTO>(HttpStatus.IM_USED);
+		}else {
+			return new ResponseEntity<MedCentarDTO>(dto, HttpStatus.OK);
+		}
+	}
+	@GetMapping("/getAllPorudzbineByWorkersId/{id}")
+	public ResponseEntity<Collection<PorudzbinaDTO>> getAllPorudzbineByWorkersId(@PathVariable(value="id") Long id){
+		Collection<PorudzbinaDTO> retList = this.medCentarService.getAllPorudzbineByWorkersId(id);
+		if(retList.isEmpty()) {
+			return new ResponseEntity<Collection<PorudzbinaDTO>>(HttpStatus.IM_USED);
+		}else {
+			return new ResponseEntity<Collection<PorudzbinaDTO>>(retList, HttpStatus.ACCEPTED);
+		}
+	}
+	@GetMapping("/getPorudzbinaById/{id}")
+	public ResponseEntity<PorudzbinaDTO> getPorudzbinaById(@PathVariable(value="id") Long id){
+		PorudzbinaDTO retVal = this.medCentarService.getPorudzbinaById(id);
+		if(retVal==null) {
+			return new ResponseEntity<PorudzbinaDTO>(HttpStatus.IM_USED);
+		}else {
+			return new ResponseEntity<PorudzbinaDTO>(retVal, HttpStatus.ACCEPTED);
+		}
+	}
+	@GetMapping("/getNarudzbineByWorkersId/{id}")
+	public ResponseEntity<Collection<PorudzbinaDTO>> getNarudzbineByWorkersId(@PathVariable(value="id") Long id){
+		Collection<PorudzbinaDTO> retList = this.medCentarService.getNarudzbineByWorkersId(id);
+		if(retList.isEmpty()) {
+			return new ResponseEntity<Collection<PorudzbinaDTO>>(HttpStatus.IM_USED);
+		}else {
+			return new ResponseEntity<Collection<PorudzbinaDTO>>(retList, HttpStatus.ACCEPTED);
+		}
 	}
 }

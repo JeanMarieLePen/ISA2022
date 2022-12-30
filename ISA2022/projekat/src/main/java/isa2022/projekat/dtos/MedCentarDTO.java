@@ -17,9 +17,30 @@ public class MedCentarDTO {
 	private RadnoVremeDTO radnoVreme;
 	private Collection<TerminDTO> termini;
 	private Collection<MedRadnikDTO> listaZaposlenih;
+	
+	private Collection<PorudzbinaDTO> listaPorudzbina;
+	private Collection<PorudzbinaDTO> listaNarucilaca;
+	
 	public MedCentarDTO() {
 		super();
 	}
+	
+	public Collection<PorudzbinaDTO> getListaPorudzbina() {
+		return listaPorudzbina;
+	}
+
+	public void setListaPorudzbina(Collection<PorudzbinaDTO> listaPorudzbina) {
+		this.listaPorudzbina = listaPorudzbina;
+	}
+
+	public Collection<PorudzbinaDTO> getListaNarucilaca() {
+		return listaNarucilaca;
+	}
+
+	public void setListaNarucilaca(Collection<PorudzbinaDTO> listaNarucilaca) {
+		this.listaNarucilaca = listaNarucilaca;
+	}
+
 	public String getNaziv() {
 		return naziv;
 	}

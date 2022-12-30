@@ -7,6 +7,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -29,17 +30,22 @@ import org.springframework.stereotype.Service;
 import io.jsonwebtoken.lang.Collections;
 import isa2022.projekat.dtos.CustomRezDTO;
 import isa2022.projekat.dtos.MedCentarDTO;
+import isa2022.projekat.dtos.PorudzbinaDTO;
 import isa2022.projekat.dtos.PretragaDTO;
 import isa2022.projekat.dtos.TerminDTO;
 import isa2022.projekat.dtos.TerminMiniDTO;
 import isa2022.projekat.mappers.MedCentarMapper;
+import isa2022.projekat.mappers.PorudzbinaMapper;
 import isa2022.projekat.mappers.TerminMapper;
 import isa2022.projekat.model.data.MedCentar;
+import isa2022.projekat.model.data.Porudzbina;
 import isa2022.projekat.model.data.Termin;
 import isa2022.projekat.model.korisnici.MedRadnik;
 import isa2022.projekat.model.korisnici.RegKorisnik;
 import isa2022.projekat.repositories.MedCentarRepository;
 import isa2022.projekat.repositories.MedRadnikRep;
+import isa2022.projekat.repositories.MedRadnikRepository;
+import isa2022.projekat.repositories.PorudzbinaRepository;
 import isa2022.projekat.repositories.RegKorisnikRepository;
 import isa2022.projekat.repositories.TerminRepository;
 
@@ -50,7 +56,13 @@ public class MedCentarService {
 	private MedCentarRepository medCentarRepository;
 	@Autowired
 	private MedCentarMapper medCentarMapper;
+	@Autowired
+	private PorudzbinaMapper porudzbinaMapper;
+	@Autowired
+	private PorudzbinaRepository porudzbinaRepository;
 	
+	@Autowired
+	private MedRadnikRepository medRadnikRepository;
 	@Autowired 
 	private TerminMapper terminMapper;
 	@Autowired 
@@ -320,6 +332,74 @@ public class MedCentarService {
 //		emailService.sendReservationNotificationMail(rk,mc,t);
 		return t;
 	}
-	
-	
+
+	@Transactional
+	public PorudzbinaDTO makeNewOrder(Long idOd, Long idDo, PorudzbinaDTO porudzbina) {
+		Optional<Porudzbina> p = this.porudzbinaRepository.findByMedCentarOd_Id(idOd);
+		if(!p.isEmpty()) {
+			System.out.println("VEC POSTOJI AKTIVNA NARUDZBINA SA OVIM CENTROM");
+			return null;
+		}else {
+			Porudzbina temp = this.porudzbinaMapper.fromDTO(porudzbina);
+			MedCentar od = this.medCentarRepository.findById(idOd).orElse(null);
+			MedCentar doTmp = this.medCentarRepository.findById(idDo).orElse(null);
+			temp.setMedCentarOd(od);
+			temp.setMedCentarZa(doTmp);
+			this.porudzbinaRepository.saveAndFlush(temp);
+			PorudzbinaDTO retVal = this.porudzbinaMapper.toDTO(temp);
+			return retVal;
+		}
+	}
+
+	public MedCentarDTO findMedCentarByWorkerId(Long id) {
+		// TODO Auto-generated method stub
+		MedRadnik mr = this.medRadnikRepository.findById(id).orElse(null);
+		if(mr == null) {
+			return null;
+		}else {
+			return this.medCentarMapper.toDTO(mr.getMedCentar());
+		}
+	}
+
+	public Collection<PorudzbinaDTO> getAllPorudzbineByWorkersId(Long id) {
+		// TODO Auto-generated method stub
+		MedRadnik mr = this.medRadnikRepository.findById(id).orElse(null);
+		if(mr!=null) {
+			MedCentar mc = mr.getMedCentar();
+			Collection<Porudzbina> tempList = mc.getListaNarucilaca();
+			
+			Collection<PorudzbinaDTO> retList = new ArrayList<PorudzbinaDTO>();
+			for(Porudzbina p : tempList) {
+				retList.add(this.porudzbinaMapper.toDTO(p));
+			}
+			return retList;
+		}
+		return null;
+	}
+
+	public PorudzbinaDTO getPorudzbinaById(Long id) {
+		// TODO Auto-generated method stub
+		Porudzbina p = this.porudzbinaRepository.findById(id).orElse(null);
+		if(p!=null) {
+			PorudzbinaDTO pdto = this.porudzbinaMapper.toDTO(p);
+			return pdto;
+		}
+		return null;
+	}
+
+	public Collection<PorudzbinaDTO> getNarudzbineByWorkersId(Long id) {
+		// TODO Auto-generated method stub
+		MedRadnik mr = this.medRadnikRepository.findById(id).orElse(null);
+		if(mr!=null) {
+			MedCentar mc = mr.getMedCentar();
+			Collection<Porudzbina> tempList = mc.getListaPorudzbina();
+			
+			Collection<PorudzbinaDTO> retList = new ArrayList<PorudzbinaDTO>();
+			for(Porudzbina p : tempList) {
+				retList.add(this.porudzbinaMapper.toDTO(p));
+			}
+			return retList;
+		}
+		return null;
+	}
 }
