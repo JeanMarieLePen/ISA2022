@@ -16,7 +16,50 @@ import ZakazaniTerminiKorisnika from './overviews/ZakazaniTerminiKorisnika'
 import EditCelandar from './forms/EditCalendar'
 import CustomZakazivanje from './forms/customZakazivanje'
 
+// import Mapa from './main-components/Mapa'
+import Test from './main-components/Test'
+// import Kamion from './main-components/Kamion'
+import PrikazKretanja from './main-components/PrikazKretanja'
+import Transport from './main-components/Transport'
+
+import Narudzbine from './overviews/Narudzbine'
+import Narucilac from './overviews/Narucilac'
 export default[
+    {
+        path:`/medCentarOrders`,
+        name:Narucilac,
+        component:Narucilac
+    },
+    {
+        path:`/orders`,
+        name:Narudzbine,
+        component:Narudzbine
+    },
+    {
+        path:`/transport/:id`,
+        name:Transport,
+        component:Transport
+    },
+    {
+        path:`/path/:id`,
+        name:PrikazKretanja,
+        component:PrikazKretanja
+    },
+    // {
+    //     path:`/kamion`,
+    //     name:'Kamion',
+    //     component:Kamion
+    // },
+    // {
+    //     path:`/mapa`,
+    //     name:'Mapa',
+    //     component:Mapa
+    // },
+    {
+        path:`/test`,
+        name:'Test',
+        component:Test
+    },
     {
         path:`/`,
         name:`Home`,

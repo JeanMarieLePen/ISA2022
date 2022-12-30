@@ -196,12 +196,51 @@
                 </div>
                 <div class="col-xl-3 col-md-6 mb-4">
                     <div class="card border-0 shadow" style="height:100%">
-                        <router-link style="text-decoration: none; c" to="/updateTermini" class="nav-link" exact>
+                        <router-link style="text-decoration: none; c" to="/hospitalsOverview" class="nav-link" exact>
                             <img src="../assets/hospitals.png" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h5 class="card-title mb-0">Pregled centara</h5>
+                                <div class="card-text text-black-50" style="height:100px;">
+                                    Pregledajte podatke o svim centrima za donaciju krvi...
+                                </div>
+                            </div>
+                        </router-link>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-0 shadow" style="height:100%">
+                        <router-link style="text-decoration: none; c" to="/updateTermini" class="nav-link" exact>
+                            <img src="../assets/edit-centar.png" class="card-img-top" alt="...">
                             <div class="card-body text-center">
                                 <h5 class="card-title mb-0">Update bolnica</h5>
                                 <div class="card-text text-black-50" style="height:100px;">
                                     Izmenite termine davanja krvi u vasoj bolnici
+                                </div>
+                            </div>
+                        </router-link>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-0 shadow" style="height:100%">
+                        <router-link style="text-decoration: none; c" to="/orders" class="nav-link" exact>
+                            <img src="../assets/order-icon.png" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h5 class="card-title mb-0">Dostava</h5>
+                                <div class="card-text text-black-50" style="height:100px;">
+                                    Pogledajte narudzbine koje trebaju biti ispunjene...
+                                </div>
+                            </div>
+                        </router-link>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-0 shadow" style="height:100%">
+                        <router-link style="text-decoration: none; c" to="/medCentarOrders" class="nav-link" exact>
+                            <img src="../assets/transport-icon.png" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h5 class="card-title mb-0">Vase Porudzbine</h5>
+                                <div class="card-text text-black-50" style="height:100px;">
+                                    Pogledajte narudzbine koje ste napravili...
                                 </div>
                             </div>
                         </router-link>
@@ -220,6 +259,19 @@
                                 <h5 class="card-title mb-0">Pretraga ponude</h5>
                                 <div class="card-text text-black-50" style="height:100px;">
                                     Pretrazite detaljno ponudu svih proizvoda u ponudi...
+                                </div>
+                            </div>
+                        </router-link>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-0 shadow" style="height:100%">
+                        <router-link style="text-decoration: none; c" to="/hospitalsOverview" class="nav-link" exact>
+                            <img src="../assets/hospitals.png" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h5 class="card-title mb-0">Pregled centara</h5>
+                                <div class="card-text text-black-50" style="height:100px;">
+                                    Pregledajte podatke o svim centrima za donaciju krvi...
                                 </div>
                             </div>
                         </router-link>

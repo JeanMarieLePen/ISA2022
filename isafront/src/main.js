@@ -4,7 +4,6 @@ import VueRouter from 'vue-router'
 import Routes from './routes'
 
 import YmapPlugin from 'vue-yandex-maps'
-
 export const bus = new Vue();
 
 Vue.use(VueRouter);

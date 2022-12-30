@@ -2,6 +2,7 @@ import axios from "axios"
 
 
 const API_URL = "http://localhost:8082";
+const API_URL_2 = "http://localhost:9090";
 
 (function() {
     let token = localStorage.getItem('token');
@@ -17,7 +18,9 @@ const API_URL = "http://localhost:8082";
 
 
 class DataService{
-
+    sendCoords(coords){
+        return axios.post(`${API_URL_2}/test/coords`, coords);
+    }
     login(User){
         return axios.post(`${API_URL}/authenticate`, User);
     }
@@ -75,6 +78,23 @@ class DataService{
     }
     customRezervisi(body){
         return axios.post(`${API_URL}/medcentar/customRezervacija`,body)
+    }
+
+    getMedCentarByWorkerId(id){
+        return axios.get(`${API_URL}/medcentar/getMedCentarByWorkerId/${id}`);
+    }
+    orderBlood(idOd, idDo, form){
+        // makeNewOrder/{idOd}/{idDo}
+        return axios.post(`${API_URL}/medcentar/makeNewOrder/${idOd}/${idDo}`, form);
+    }
+    getAllPorudzbineByWorkersId(id){
+        return axios.get(`${API_URL}/medcentar/getAllPorudzbineByWorkersId/${id}`);
+    }
+    getPorudzbinaById(id){
+        return axios.get(`${API_URL}/medcentar/getPorudzbinaById/${id}`);
+    }
+    getNarudzbineByWorkersId(id){
+        return axios.get(`${API_URL}/medcentar/getNarudzbineByWorkersId/${id}`);
     }
 }
 
