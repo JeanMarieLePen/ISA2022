@@ -1,4 +1,4 @@
-package isa2022.projekat.security;
+package com.example.lokacijaservice.controllers;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -9,21 +9,17 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @Configuration
 @EnableWebSocketMessageBroker
 public class SocketConfig implements WebSocketMessageBrokerConfigurer{
-	
-//	@Override
-//	public void registerStompEndpoints(StompEndpointRegistry registry) {
-//		registry.addEndpoint("/main-app-websockets").setAllowedOriginPatterns("*").withSockJS();
-//	}
+
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
-		registry.addEndpoint("/main-app-websockets")
-		.setHandshakeHandler(new UserHandshakeHandler())
-		.setAllowedOriginPatterns("*").withSockJS();
+		registry.addEndpoint("/mywebsockets").setAllowedOriginPatterns("*")
+		/*.setAllowedOrigins("localhost:8081")*/
+		.withSockJS();
 	}
 	
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry registry) {
-		registry.enableSimpleBroker("/topic", "/queue");
-		registry.setApplicationDestinationPrefixes("/main-app");
+		registry.enableSimpleBroker("/topic");
+		registry.setApplicationDestinationPrefixes("/app");
 	}
 }

@@ -1,5 +1,7 @@
 package isa2022.projekat.controllers;
 
+import java.security.Principal;
+
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -25,6 +27,8 @@ public class CommunicationListener {
 	//METODA KOJA KOORDINATE PRIMLJENE SA QUEUE-a PROSLEDJUJE PREKO SOCKETA DO KLIJENTA
 	public void sendCoordsToClient(Lokacija coords) {
 		template.convertAndSend("/topic/coords", coords);
+//		template.convertAndSend("/queue/coords", coords);
+//		template.convertAndSendToUser("/queue/coords", coords);
 		System.out.println("KOORDINATE PROSLEDJENJE NA PRIKAZ NARUCIOCU: " + coords.getLat() + ", " + coords.getLng());
 	}
 }
